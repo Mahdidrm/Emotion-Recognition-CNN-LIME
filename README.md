@@ -16,8 +16,8 @@
 
 
 
-Main Code
--
+## Main Code
+
 ```
 Import the needed libraries
 from __future__ import print_function
@@ -38,7 +38,8 @@ from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 from keras import regularizers
 from keras.regularizers import l1
 ```
-## Initialing data
+Initialing data
+- 
 ```
 num_classes = 7                                        # We have 7 Classes: Angry, Disgust, Fear, Happy, Natural, Sad and Surprise
 img_rows, img_cols = 48,48                             # The size of input image
@@ -73,13 +74,15 @@ model.add(Flatten())
 model.add(Activation("softmax"))
 model.summary()
 ```
-### About Layers:
+About Layers:
+- 
+```
 - Each conv2D layer extracts the features of the image according to the kernel filter. we used 3 * 3 kernels.
 - And on the Maxpool diapers; they select the entities with the highest resolutions among the 2 * 2 dimension entities.
 - Flatten Layer converts a tensor to a vector to send it to fully connected layers that use in the classification.
 - The softmax activation is normally applied to the very last layer in a neural net, instead of using ReLU, sigmoid, tanh, or another activation function. The reason why softmax is useful is because it converts the output of the last layer in your neural network into what is essentially a probability distribution.
-
-Training the model
+```
+### Training the model
 -
 In this step, using our augmented data, we start to train our model. 
 ```
@@ -94,7 +97,8 @@ checkpoint = keras.callbacks.ModelCheckpoint(filepath,
 callbacks = [checkpoint]
 
 ```
-# Model compilation
+Model compilation
+-
 At first we need to compile your model. We use Adam's optimization and cross entropy to reduce the loss value of our model.
 ```
 model.compile(loss='categorical_crossentropy',optimizer=Adam(lr=0.0001, decay=1e-6),metrics=['accuracy'])  
@@ -103,7 +107,8 @@ nb_train_samples = 31205# 28709          #Number of train samples
 nb_validation_samples = 6085 # 3589      #Number of test sample
 epochs = 50                              #Number of train and test loob
 ```
-# Training the model
+### Training the model
+
 The main line to train our model. We train our model to augmented training and validation data.
 ```
 model_info = model.fit_generator(                  
@@ -116,7 +121,8 @@ model_info = model.fit_generator(
 
 model.save_weights('/emotion_detector_models/model.hdf5')
 ```
-### Plot model loss in train step
+Plot model loss in train step
+-
 ```
 print(model_info.history.keys())
 from matplotlib import pyplot as plt
@@ -140,7 +146,8 @@ model_info = model.fit_generator(
             validation_data=validation_generator,
             validation_steps=nb_validation_samples // batch_size)
 ```
-### Plot model loss in train step
+Plot model loss in train step
+-
 ```
 from matplotlib import pyplot as plt
 plt.plot(model_info.history['loss'])
@@ -151,7 +158,8 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
 ```    
-### Confusion Matrix of our model in some validation images
+Confusion Matrix of our model in some validation images
+-
 ```
 import matplotlib.pyplot as plt
 import sklearn
