@@ -425,15 +425,19 @@ LIME is a novel explanation technique that explains the predictions of any class
 ```
 import lime
 from lime import lime_image
-explainer = lime_image.LimeImageExplainer()
-explanation = explainer.explain_instance(roi[0], classifier.predict, top_labels=6)
+from lime.wrappers.scikit_image import SegmentationAlgorithm
+
+explainer = lime_image.LimeImageExplainer(verbose = False)
+segmenter = SegmentationAlgorithm('slic', n_segments=100, compactness=1, sigma=1)
+explanation = explainer.explain_instance(roi[0], classifier.predict_proba, top_labels=6, hide_color=0, num_samples=10000, segmentation_fn=segmenter)
+
 ```
 - And We put a Mask on image to show the HeatMaps
 ```
-from skimage.segmentation import mark_boundaries
-
-temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=False, num_features=10, hide_rest=False)
+from skimage.color import label2rgb
+temp, mask = explanation.get_image_and_mask(explanation.top_labels[1], positive_only=True, num_features=5, hide_rest=False)
 plt.imshow(mark_boundaries(temp / 2 + 0.5, mask))
+
  ```
 
 Refrences
