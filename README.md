@@ -1,4 +1,4 @@
-# Emotion-Recognition
+# Emotion-Recognition via CNN and Explaination AI (LIME algorithm)
 
 ### In this work, we followed two steps: 
 
