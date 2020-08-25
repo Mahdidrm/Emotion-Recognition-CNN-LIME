@@ -10,14 +10,14 @@ The main idea of this work is to apply several AI  methods  on the CNN classifie
 
 ### Requirements
 
-- Python:                 ---------->             ```              3.3+ or Python 2.7                         ```
-- OS:                     ---------->             ```              Windows macOS or Linux                     ```
-- Keras:                  ---------->             ```              pip install Keras                          ```
-- Tensorflow:             ---------->             ```              pip install Tensorflow                     ```
-- dlib:                   ---------->             ```              pip install dlib                           ```
-- face-recognition:       ---------->             ```              pip install face-recognition               ```
-- fer2013 dataset         ---------->             ```              https://www.kaggle.com/deadskull7/fer2013  ```
-- LIME explaination AI    ---------->             ```              pip install lime                           ```
+- Python:-------------------->             ```              3.3+ or Python 2.7                         ```
+- OS:------------------------>             ```              Windows macOS or Linux                     ```
+- Keras:--------------------->             ```              pip install Keras                          ```
+- Tensorflow:---------------->             ```              pip install Tensorflow                     ```
+- dlib:---------------------->             ```              pip install dlib                           ```
+- face-recognition:---------->             ```              pip install face-recognition               ```
+- fer2013 dataset:----------->             ```              https://www.kaggle.com/deadskull7/fer2013  ```
+- LIME explaination AI:------>             ```              pip install lime                           ```
 
 Fer2013 dataset
 -
