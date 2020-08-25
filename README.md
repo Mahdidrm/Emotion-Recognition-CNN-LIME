@@ -138,7 +138,9 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
 ```
-The output of training step: ![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/Figure_1.png?raw=true)
+- The output of training step:
+
+![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/Figure_1.png?raw=true)
 
 Testing the model with validation data
 -
@@ -165,7 +167,9 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
 ```    
-The output of validation step:  ![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/test.png?raw=true)
+- The output of validation step: 
+
+![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/test.png?raw=true)
 
 Confusion Matrix of our model in some validation images
 -
@@ -225,9 +229,15 @@ _ = plt.xticks(tick_marks, classes, rotation=90)
 _ = plt.yticks(tick_marks, classes)
 ```
 - In Number schema: 
+
 ![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/confision.jpg?raw=true) 
 - And in Graohic schema:
+
 ![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/confission.png?raw=true)
+
+
+- And the classification report:
+![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/report.jpg?raw=true)
 
 Test on some of validation images
 - 
