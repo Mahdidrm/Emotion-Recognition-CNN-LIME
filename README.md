@@ -37,7 +37,7 @@ Use some data augmentation
         
 Creating the model
 -
-# For the first step, we used a handcrafted architecture from CNN with these layers: 
+- For the first step, we used a handcrafted architecture from CNN with these layers: 
 - model = Sequential()
 
 - model.add(Conv2D(32, kernel_size=(3, 3), activation='relu',kernel_regularizer=regularizers.l2(0.0001),input_shape=(48,48,1)))
@@ -63,4 +63,30 @@ Creating the model
 - Flatten Layer converts a tensor to a vector to send it to fully connected layers that use in the classification.
 - The softmax activation is normally applied to the very last layer in a neural net, instead of using ReLU, sigmoid, tanh, or another activation function. The reason why softmax is useful is because it converts the output of the last layer in your neural network into what is essentially a probability distribution.
 
+Training the model
+-
+## In this step, using our augmented data, we start to train our model. 
+- filepath = os.path.join('/emotion_detector_models/model.hdf5')   #First we need to load a model file to save the training results (model weight).
+                        
+- checkpoint = keras.callbacks.ModelCheckpoint(filepath,           #We simply monitor the true values of the validation data during training and record the best values.
+                                             monitor='val_acc',      
+                                             verbose=1,
+                                             save_best_only=True,
+                                             mode='max')
+- callbacks = [checkpoint]
+- model.compile(loss='categorical_crossentropy',optimizer=Adam(lr=0.0001, decay=1e-6),metrics=['accuracy'])  # At first we need to compile your model. We use Adam's optimization and cross entropy to reduce the loss value of our model.
+- Adam is an optimization algorithm that can be used instead of the classical stochastic gradient descent procedure to update network weights iterative based in training data.
+- nb_train_samples = 31205# 28709          #Number of train samples
+- nb_validation_samples = 6085 # 3589      #Number of test sample
+- epochs = 50                              #Number of train and test loob
+
+- model_info = model.fit_generator(                  #The main line to train our model. We train our model to augmented training and validation data.
+            train_generator,
+            steps_per_epoch=nb_train_samples // batch_size,
+            epochs=epochs,
+            callbacks = callbacks,
+            validation_data=validation_generator,
+            validation_steps=nb_validation_samples // batch_size)
+
+- model.save_weights('/emotion_detector_models/model.hdf5')
 
