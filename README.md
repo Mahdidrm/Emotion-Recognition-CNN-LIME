@@ -31,6 +31,30 @@ Main Code
 - train_data_dir = '/src/fer2013/train'                  # Train data(contain 7 subfolder for each emotion)
 - validation_data_dir = '/src/fer2013/validation/'       # Test data(contain 7 subfolder for each emotion)
 
+Use some data augmentaiton 
+-
+#val_datagen = ImageDataGenerator(rescale=1./255)
+#train_datagen = ImageDataGenerator(
+#rescale=1./255,
+#rotation_range=30,
+#shear_range=0.3,
+#zoom_range=0.3,
+#horizontal_flip=True,
+#fill_mode='nearest')
+#train_generator = train_datagen.flow_from_directory(
+#train_data_dir,
+#target_size=(48,48),#(48,48),
+#batch_size=batch_size,
+#color_mode="grayscale",
+#class_mode='categorical')
+
+#validation_generator = val_datagen.flow_from_directory(
+#validation_data_dir,
+#target_size=(48,48), #(48,48),
+#batch_size=batch_size,
+#color_mode="grayscale",
+#class_mode='categorical')
+        
 Creating the model
 -
 # For the first step, we used a handcrafted architecture from CNN with these layers: 
