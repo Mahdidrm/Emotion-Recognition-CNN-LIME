@@ -102,15 +102,15 @@ callbacks = [checkpoint]
 ```
 Model compilation
 -
-At first we need to compile your model. We use Adam's optimization and cross entropy to reduce the loss value of our model.
+- At first we need to compile your model. We use Adam's optimization and cross entropy to reduce the loss value of our model.
 ```
 model.compile(loss='categorical_crossentropy',optimizer=Adam(lr=0.0001, decay=1e-6),metrics=['accuracy'])  
 ```
-Adam is an optimization algorithm that can be used instead of the classical stochastic gradient descent procedure to update network weights iterative based in training data.
+- Adam is an optimization algorithm that can be used instead of the classical stochastic gradient descent procedure to update network weights iterative based in training data.
 ```
-nb_train_samples = 31205# 28709          #Number of train samples
-nb_validation_samples = 6085 # 3589      #Number of test sample
-epochs = 50                              #Number of train and test loob
+nb_train_samples = 31205           #Number of train samples
+nb_validation_samples = 6085       #Number of test sample
+epochs = 50                        #Number of train and test loob
 ```
 ### Training the model
 
