@@ -338,4 +338,12 @@ cv2.waitKey(0)
 cv2.destroyAllWindows()
 
    ```           
-      
+### Explainable AI  
+LIME
+-
+```
+import lime
+from lime import lime_image
+explainer = lime_image.LimeImageExplainer()
+explanation = explainer.explain_instance(roi[0], classifier.predict, top_labels=6)
+    ```
