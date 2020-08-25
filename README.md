@@ -1,5 +1,7 @@
-### Emotion-Recognition
+# Emotion-Recognition
+```
 In this work, we followed two steps: 
+```
 1- We used a convolution neural network (CNN) for the emotions recognition
 2- Using the Lime algorithm to monitor the heat maps of the input image which help our CNN decide to select the corresponding emotion.
 
@@ -24,7 +26,7 @@ Main Code
 -   from keras import regularizers
 -   from keras.regularizers import l1
 
-# Initialing data
+## Initialing data
 -   num_classes = 7                                        # We have 7 Classes: Angry, Disgust, Fear, Happy, Natural, Sad and Surprise
 -   img_rows, img_cols = 48,48                             # The size of input image
 -   batch_size = 512                                       # The number of input pixels for augmentation
