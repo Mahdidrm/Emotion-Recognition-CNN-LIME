@@ -27,33 +27,13 @@ Main Code
 # Initialing data
 - num_classes = 7                                        # We have 7 Classes: Angry, Disgust, Fear, Happy, Natural, Sad and Surprise
 - img_rows, img_cols = 48,48                             # The size of input image
-- batch_size = 512                                       # The number of input pixels on model
+- batch_size = 512                                       # The number of input pixels for augmentation
 - train_data_dir = '/src/fer2013/train'                  # Train data(contain 7 subfolder for each emotion)
 - validation_data_dir = '/src/fer2013/validation/'       # Test data(contain 7 subfolder for each emotion)
 
-Use some data augmentaiton 
+Use some data augmentation
 -
-#val_datagen = ImageDataGenerator(rescale=1./255)
-#train_datagen = ImageDataGenerator(
-#rescale=1./255,
-#rotation_range=30,
-#shear_range=0.3,
-#zoom_range=0.3,
-#horizontal_flip=True,
-#fill_mode='nearest')
-#train_generator = train_datagen.flow_from_directory(
-#train_data_dir,
-#target_size=(48,48),#(48,48),
-#batch_size=batch_size,
-#color_mode="grayscale",
-#class_mode='categorical')
-
-#validation_generator = val_datagen.flow_from_directory(
-#validation_data_dir,
-#target_size=(48,48), #(48,48),
-#batch_size=batch_size,
-#color_mode="grayscale",
-#class_mode='categorical')
+# Use ImageDataGenerator to create fake samples to help our network learn better and avoid overfitting. We perform a rescale, rotation_range, shear_range, zoom_range, horizontal_flip to do training, validation and test data.
         
 Creating the model
 -
