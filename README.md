@@ -69,10 +69,10 @@ Training the model
 - filepath = os.path.join('/emotion_detector_models/model.hdf5')   #First we need to load a model file to save the training results (model weight).
                         
 - checkpoint = keras.callbacks.ModelCheckpoint(filepath,           #We simply monitor the true values of the validation data during training and record the best values.
-                                             monitor='val_acc',      
-                                             verbose=1,
-                                             save_best_only=True,
-                                             mode='max')
+-                                             monitor='val_acc',      
+-                                             verbose=1,
+-                                             save_best_only=True,
+-                                             mode='max')
 - callbacks = [checkpoint]
 - model.compile(loss='categorical_crossentropy',optimizer=Adam(lr=0.0001, decay=1e-6),metrics=['accuracy'])  # At first we need to compile your model. We use Adam's optimization and cross entropy to reduce the loss value of our model.
 - Adam is an optimization algorithm that can be used instead of the classical stochastic gradient descent procedure to update network weights iterative based in training data.
@@ -81,12 +81,12 @@ Training the model
 - epochs = 50                              #Number of train and test loob
 
 - model_info = model.fit_generator(                  #The main line to train our model. We train our model to augmented training and validation data.
-            train_generator,
-            steps_per_epoch=nb_train_samples // batch_size,
-            epochs=epochs,
-            callbacks = callbacks,
-            validation_data=validation_generator,
-            validation_steps=nb_validation_samples // batch_size)
+-            train_generator,
+-            steps_per_epoch=nb_train_samples // batch_size,
+ -           epochs=epochs,
+  -          callbacks = callbacks,
+   -         validation_data=validation_generator,
+    -        validation_steps=nb_validation_samples // batch_size)
 
 - model.save_weights('/emotion_detector_models/model.hdf5')
 
