@@ -4,6 +4,7 @@ In this work, we followed two steps:
 2- Using the Lime algorithm to monitor the heat maps of the input image which help our CNN decide to select the corresponding emotion.
 
 For the first step, we used a handcrafted architecture from CNN with these layers:
+
 Creating the model
 - 
 model = Sequential()
@@ -25,7 +26,7 @@ model.add(Flatten())
 model.add(Activation("softmax"))
 model.summary()
 
-Model layers:
--------------------
-Each conv2D layer extracts the features of the image according to the kernel filter. we used 3 * 3 kernels.
+Layers:
+-
+Each /b conv2D /b layer extracts the features of the image according to the kernel filter. we used 3 * 3 kernels.
 And on the Maxpool diapers; they select the entities with the highest resolutions among the 2 * 2 dimension entities.
