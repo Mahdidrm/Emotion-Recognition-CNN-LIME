@@ -415,6 +415,8 @@ Explainable AI (XAI) refers to methods and techniques in the application of arti
 The technical challenge of explaining AI decisions is sometimes known as the interpretability problem.[3] Another consideration is info-besity (overload of information), thus, full transparency may not be always possible or even required. However, simplification at the cost of misleading users in order to increase trust or to hide undesirable attributes of the system should be avoided by allowing a tradeoff between interpretability and completeness of an explanation. [4]
 
 AI systems optimize behavior to satisfy a mathematically-specified goal system chosen by the system designers, such as the command "maximize accuracy of assessing how positive film reviews are in the test dataset". The AI may learn useful general rules from the test-set, such as "reviews containing the word 'horrible'" are likely to be negative". However, it may also learn inappropriate rules, such as "reviews containing 'Daniel Day-Lewis' are usually positive"; such rules may be undesirable if they are deemed likely to fail to generalize outside the test set, or if people consider the rule to be "cheating" or "unfair". A human can audit rules in an XAI to get an idea how likely the system is to generalize to future real-world data outside the test-set.[3]
+
+
 Methods
 -
 - LIME
