@@ -346,4 +346,11 @@ import lime
 from lime import lime_image
 explainer = lime_image.LimeImageExplainer()
 explanation = explainer.explain_instance(roi[0], classifier.predict, top_labels=6)
-    ```
+```
+And We put a Mask on image to show the HeatMaps
+```
+from skimage.segmentation import mark_boundaries
+
+temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=False, num_features=10, hide_rest=False)
+plt.imshow(mark_boundaries(temp / 2 + 0.5, mask))
+ ```
