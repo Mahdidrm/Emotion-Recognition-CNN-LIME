@@ -436,7 +436,10 @@ plt.imshow(mark_boundaries(temp / 2 + 0.5, mask))
 
 Refrences
 -
- 1- Sample, Ian (5 November 2017). "Computer says no: why making AIs fair, accountable and transparent is crucial". the Guardian. Retrieved 30 January 2018. https://www.theguardian.com/science/2017/nov/05/computer-says-no-why-making-ais-fair-accountable-and-transparent-is-crucial
- 2- Edwards, Lilian; Veale, Michael (2017). "Slave to the Algorithm? Why a 'Right to an Explanation' Is Probably Not the Remedy You Are Looking For". Duke Law and Technology Review. 16: 18. SSRN 2972855. https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2972855
- 3- "How AI detectives are cracking open the black box of deep learning". Science. 5 July 2017. Retrieved 30 January 2018. https://www.sciencemag.org/news/2017/07/how-ai-detectives-are-cracking-open-black-box-deep-learning
- 4- Gilpin, Leilani H.; Bau, David; Yuan, Ben Z.; Bajwa, Ayesha; Specter, Michael; Kagal, Lalana (2018-05-31). "Explaining Explanations: An Overview of Interpretability of Machine Learning". arXiv:1806.00069 [stat.AI].
+1- Sample, Ian (5 November 2017). "Computer says no: why making AIs fair, accountable and transparent is crucial". the Guardian. Retrieved 30 January 2018. https://www.theguardian.com/science/2017/nov/05/computer-says-no-why-making-ais-fair-accountable-and-transparent-is-crucial
+ 
+2- Edwards, Lilian; Veale, Michael (2017). "Slave to the Algorithm? Why a 'Right to an Explanation' Is Probably Not the Remedy You Are Looking For". Duke Law and Technology Review. 16: 18. SSRN 2972855. https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2972855
+
+3- "How AI detectives are cracking open the black box of deep learning". Science. 5 July 2017. Retrieved 30 January 2018. https://www.sciencemag.org/news/2017/07/how-ai-detectives-are-cracking-open-black-box-deep-learning
+ 
+4- Gilpin, Leilani H.; Bau, David; Yuan, Ben Z.; Bajwa, Ayesha; Specter, Michael; Kagal, Lalana (2018-05-31). "Explaining Explanations: An Overview of Interpretability of Machine Learning". arXiv:1806.00069 [stat.AI].
