@@ -7,12 +7,12 @@
 ```
 ### Requirements
 
-- Python:               ```              3.3+ or Python 2.7           ```
-- OS:                   ```              Windows macOS or Linux       ```
-- Keras:                ```              pip install Keras            ```
-- Tensorflow:           ```              pip install Tensorflow       ```
-- dlib:                 ```              pip install dlib             ```
-- face-recognition:     ```              pip install face-recognition ```
+- Python:                  ```              3.3+ or Python 2.7           ```
+- OS:                      ```              Windows macOS or Linux       ```
+- Keras:                   ```              pip install Keras            ```
+- Tensorflow:              ```              pip install Tensorflow       ```
+- dlib:                    ```              pip install dlib             ```
+- face-recognition:        ```              pip install face-recognition ```
 
 
 Main Code
