@@ -25,11 +25,11 @@ from keras import regularizers
 from keras.regularizers import l1
 
 # Initialing data
-num_classes = 7                                        # We have 7 Classes: Angry, Disgust, Fear, Happy, Natural, Sad and Surprise
-img_rows, img_cols = 48,48                             # The size of input image
-batch_size = 512                                       # The number of input pixels on model
-train_data_dir = '/src/fer2013/train'                  # Train data(contain 7 subfolder for each emotion)
-validation_data_dir = '/src/fer2013/validation/'       # Test data(contain 7 subfolder for each emotion)
+- num_classes = 7                                        # We have 7 Classes: Angry, Disgust, Fear, Happy, Natural, Sad and Surprise
+- img_rows, img_cols = 48,48                             # The size of input image
+- batch_size = 512                                       # The number of input pixels on model
+- train_data_dir = '/src/fer2013/train'                  # Train data(contain 7 subfolder for each emotion)
+- validation_data_dir = '/src/fer2013/validation/'       # Test data(contain 7 subfolder for each emotion)
 
 Creating the model
 -
