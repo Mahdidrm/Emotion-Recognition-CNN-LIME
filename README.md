@@ -6,30 +6,30 @@ In this work, we followed two steps:
 Main Code
 -
 # Import the needed libraries
-- from __future__ import print_function
-- import keras
-- from keras.preprocessing.image import ImageDataGenerator
-- from keras.models import Sequential
-- from keras.layers import Dense, Dropout, Activation, Flatten, BatchNormalization
-- from keras.layers import Conv2D, MaxPooling2D
-- from keras.preprocessing.image import ImageDataGenerator
-- import os
-- from keras.models import Sequential
-- from keras.layers.normalization import BatchNormalization
-- from keras.layers.convolutional import Conv2D, MaxPooling2D
-- from keras.layers.advanced_activations import ELU
-- from keras.layers.core import Activation, Flatten, Dropout, Dense
-- from keras.optimizers import RMSprop, SGD, Adam
-- from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
-- from keras import regularizers
-- from keras.regularizers import l1
+-   from __future__ import print_function
+-   import keras
+-   from keras.preprocessing.image import ImageDataGenerator
+-   from keras.models import Sequential
+-   from keras.layers import Dense, Dropout, Activation, Flatten, BatchNormalization
+-   from keras.layers import Conv2D, MaxPooling2D
+-   from keras.preprocessing.image import ImageDataGenerator
+-   import os
+-   from keras.models import Sequential
+-   from keras.layers.normalization import BatchNormalization
+-   from keras.layers.convolutional import Conv2D, MaxPooling2D
+-   from keras.layers.advanced_activations import ELU
+-   from keras.layers.core import Activation, Flatten, Dropout, Dense
+-   from keras.optimizers import RMSprop, SGD, Adam
+-   from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
+-   from keras import regularizers
+-   from keras.regularizers import l1
 
 # Initialing data
-- num_classes = 7                                        # We have 7 Classes: Angry, Disgust, Fear, Happy, Natural, Sad and Surprise
-- img_rows, img_cols = 48,48                             # The size of input image
-- batch_size = 512                                       # The number of input pixels for augmentation
-- train_data_dir = '/src/fer2013/train'                  # Train data(contain 7 subfolder for each emotion)
-- validation_data_dir = '/src/fer2013/validation/'       # Test data(contain 7 subfolder for each emotion)
+-   num_classes = 7                                        # We have 7 Classes: Angry, Disgust, Fear, Happy, Natural, Sad and Surprise
+-   img_rows, img_cols = 48,48                             # The size of input image
+-   batch_size = 512                                       # The number of input pixels for augmentation
+-   train_data_dir = '/src/fer2013/train'                  # Train data(contain 7 subfolder for each emotion)
+-   validation_data_dir = '/src/fer2013/validation/'       # Test data(contain 7 subfolder for each emotion)
 
 Use some data augmentation
 -
@@ -37,12 +37,12 @@ Use some data augmentation
         
 Creating the model
 -
-- For the first step, we used a handcrafted architecture from CNN with these layers: 
-- model = Sequential()
+-   For the first step, we used a handcrafted architecture from CNN with these layers: 
+-   model = Sequential()
 
-- model.add(Conv2D(32, kernel_size=(3, 3), activation='relu',kernel_regularizer=regularizers.l2(0.0001),input_shape=(48,48,1)))
-- model.add(Conv2D(64, kernel_size=(3, 3), activation='relu',kernel_regularizer=regularizers.l2(0.0001)))
-- model.add(MaxPooling2D(pool_size=(2, 2)))
+-   model.add(Conv2D(32, kernel_size=(3, 3), activation='relu',kernel_regularizer=regularizers.l2(0.0001),input_shape=(48,48,1)))
+-   model.add(Conv2D(64, kernel_size=(3, 3), activation='relu',kernel_regularizer=regularizers.l2(0.0001)))
+-   model.add(MaxPooling2D(pool_size=(2, 2)))
 
 - model.add(Conv2D(128, kernel_size=(3, 3), activation='relu', kernel_regularizer=regularizers.l2(0.0001)))
 - model.add(MaxPooling2D(pool_size=(2, 2)))
