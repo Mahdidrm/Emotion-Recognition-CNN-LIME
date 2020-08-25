@@ -1,12 +1,12 @@
 # Emotion-Recognition
 
 ### In this work, we followed two steps: 
-```
-1- We used a convolution neural network (CNN) for the emotions recognition
-2- Using the Lime algorithm to monitor the heat maps of the input image which help our CNN decide to select the corresponding emotion.
-```
+
+``` 1- We used a convolution neural network (CNN) for the emotions recognition```
+``` 2- Using the Lime algorithm to monitor the heat maps of the input image which help our CNN decide to select the corresponding emotion. ```
+
 ### Requirements
-```
+
 - Python:                  ```              3.3+ or Python 2.7           ```
 - OS:                      ```              Windows macOS or Linux       ```
 - Keras:                   ```              pip install Keras            ```
@@ -14,7 +14,7 @@
 - dlib:                    ```              pip install dlib             ```
 - face-recognition:        ```              pip install face-recognition ```
 
-```
+
 
 Main Code
 -
@@ -129,11 +129,74 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
 ```
-### Testing the model with validation data
-```model_info = model.fit_generator(
+Testing the model with validation data
+-
+```
+model_info = model.fit_generator(
             train_generator,
             steps_per_epoch=nb_train_samples // batch_size,
             epochs=epochs,
             callbacks = callbacks,
             validation_data=validation_generator,
-            validation_steps=nb_validation_samples // batch_size)```
+            validation_steps=nb_validation_samples // batch_size)
+```
+### Plot model loss in train step
+```
+from matplotlib import pyplot as plt
+plt.plot(model_info.history['loss'])
+plt.plot(model_info.history['val_loss'])
+plt.title('Model loss in Test step')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.show()
+```    
+### Confusion Matrix of our model in some validation images
+```
+import matplotlib.pyplot as plt
+import sklearn
+import PIL
+from sklearn.metrics import classification_report, confusion_matrix
+import numpy as np
+
+nb_train_samples =  4421          # 28273
+nb_validation_samples =4096       # 3534
+validation_datagen = ImageDataGenerator(featurewise_center=True,
+                                        featurewise_std_normalization=True)
+ # We need to recreate our validation generator with shuffle = false
+validation_generator = validation_datagen.flow_from_directory(
+        validation_data_dir,
+        color_mode = 'grayscale',
+        target_size=(img_rows, img_cols),
+        batch_size=batch_size,
+        class_mode='categorical',
+        shuffle=False)
+
+class_labels = validation_generator.class_indices
+class_labels = {v: k for k, v in class_labels.items()}
+classes = list(class_labels.values())
+
+#Confution Matrix and Classification Report
+Y_pred = model.predict_generator(validation_generator, nb_validation_samples // batch_size+1)
+y_pred = np.argmax(Y_pred, axis=1)
+
+print('Confusion Matrix')
+print(confusion_matrix(validation_generator.classes, y_pred))
+print('Classification Report')
+target_names = list(class_labels.values())
+print(classification_report(validation_generator.classes, y_pred, target_names=target_names))
+
+plt.figure(figsize=(8,8))
+cnf_matrix = confusion_matrix(validation_generator.classes, y_pred)
+
+plt.imshow(cnf_matrix, interpolation='nearest')
+plt.colorbar()
+tick_marks = np.arange(len(classes))
+_ = plt.xticks(tick_marks, classes, rotation=90)
+_ = plt.yticks(tick_marks, classes)
+```
+
+
+            
+            
+      
