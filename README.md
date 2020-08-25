@@ -19,9 +19,9 @@
 
 
 ## Main Code
-
-```
 Import the needed libraries
+```
+
 from __future__ import print_function
 import keras
 from keras.preprocessing.image import ImageDataGenerator
@@ -84,13 +84,14 @@ About Layers:
 - Flatten Layer converts a tensor to a vector to send it to fully connected layers that use in the classification.
 - The softmax activation is normally applied to the very last layer in a neural net, instead of using ReLU, sigmoid, tanh, or another activation function. The reason why softmax is useful is because it converts the output of the last layer in your neural network into what is essentially a probability distribution.
 ```
-### Training the model
--
-In this step, using our augmented data, we start to train our model. 
+### Train the model
+
+In this step, using our augmented data, we start to train our model. First we need to load a model file to save the training results (model weight):
 ```
- #First we need to load a model file to save the training results (model weight).
 filepath = os.path.join('/emotion_detector_models/model.hdf5')  
-#We simply monitor the true values of the validation data during training and record the best values.       
+```
+Then, we simply monitor the true values of the validation data during training and record the best values:
+```
 checkpoint = keras.callbacks.ModelCheckpoint(filepath,           
                                             monitor='val_acc',      
                                             verbose=1,
@@ -104,7 +105,9 @@ Model compilation
 At first we need to compile your model. We use Adam's optimization and cross entropy to reduce the loss value of our model.
 ```
 model.compile(loss='categorical_crossentropy',optimizer=Adam(lr=0.0001, decay=1e-6),metrics=['accuracy'])  
+```
 Adam is an optimization algorithm that can be used instead of the classical stochastic gradient descent procedure to update network weights iterative based in training data.
+```
 nb_train_samples = 31205# 28709          #Number of train samples
 nb_validation_samples = 6085 # 3589      #Number of test sample
 epochs = 50                              #Number of train and test loob
@@ -128,17 +131,17 @@ Plot model loss in train step
 ```
 print(model_info.history.keys())
 from matplotlib import pyplot as plt
-#import matplotlib.pyplot as plt
-plt.plot(model_info.history['loss'])
-plt.plot(model_info.history['val_loss'])
-plt.title('model loss in train step')
+plt.plot(model_info.history['loss'])       #Plot the loss value of training step
+plt.plot(model_info.history['val_loss'])   #plot the Validation loss 
+plt.title('model loss in train step')     
 plt.ylabel('loss')
-plt.xlabel('epoch')
+plt.xlabel('epoch') 
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
 ```
 Testing the model with validation data
 -
+Here we test our trained model using our validation data
 ```
 model_info = model.fit_generator(
             train_generator,
@@ -150,6 +153,7 @@ model_info = model.fit_generator(
 ```
 Plot model loss in train step
 -
+And then we show the train loss of model
 ```
 from matplotlib import pyplot as plt
 plt.plot(model_info.history['loss'])
@@ -162,15 +166,21 @@ plt.show()
 ```    
 Confusion Matrix of our model in some validation images
 -
+First, we need to import some libraries
 ```
 import matplotlib.pyplot as plt
 import sklearn
 import PIL
 from sklearn.metrics import classification_report, confusion_matrix
 import numpy as np
-
-nb_train_samples =  4421          # 28273
-nb_validation_samples =4096       # 3534
+```
+And now we give the number of training and validation images
+```
+nb_train_samples =  4421          
+nb_validation_samples =4096     
+```
+Some Augmentation data
+```
 validation_datagen = ImageDataGenerator(featurewise_center=True,
                                         featurewise_std_normalization=True)
  # We need to recreate our validation generator with shuffle = false
@@ -181,7 +191,9 @@ validation_generator = validation_datagen.flow_from_directory(
         batch_size=batch_size,
         class_mode='categorical',
         shuffle=False)
-
+```
+Find the labels of Classes
+```
 class_labels = validation_generator.class_indices
 class_labels = {v: k for k, v in class_labels.items()}
 classes = list(class_labels.values())
