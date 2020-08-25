@@ -138,7 +138,7 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
 ```
-
+The output of training step:
 
 ![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/Figure_1.png?raw=true)
 
@@ -167,6 +167,10 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
 ```    
+The output of training step:
+
+![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/test.png?raw=true)
+
 Confusion Matrix of our model in some validation images
 -
 - First, we need to import some libraries
@@ -224,6 +228,7 @@ tick_marks = np.arange(len(classes))
 _ = plt.xticks(tick_marks, classes, rotation=90)
 _ = plt.yticks(tick_marks, classes)
 ```
+![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/confision.jpg?raw=true) ![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/confission.png?raw=true)
 
 Test on some of validation images
 - 
