@@ -13,9 +13,6 @@
 - Tensorflow:           ```              pip install Tensorflow       ```
 - dlib:                 ```              pip install dlib             ```
 - face-recognition:     ```              pip install face-recognition ```
-```
-
-
 
 
 Main Code
