@@ -228,7 +228,9 @@ tick_marks = np.arange(len(classes))
 _ = plt.xticks(tick_marks, classes, rotation=90)
 _ = plt.yticks(tick_marks, classes)
 ```
-![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/confision.jpg?raw=true) ![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/confission.png?raw=true)
+![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/confision.jpg?raw=true) 
+- And in Graohic schema:
+![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/confission.png?raw=true)
 
 Test on some of validation images
 - 
