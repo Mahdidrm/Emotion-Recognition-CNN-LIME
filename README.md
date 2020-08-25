@@ -6,12 +6,13 @@
 2- Using the Lime algorithm to monitor the heat maps of the input image which help our CNN decide to select the corresponding emotion.
 ```
 ### Requirements
-- 
-```
-- Python 3.3+ or Python 2.7
-- OS: Windows macOS or Linux 
-- Keras:  pip install Keras
-- Tensorflow:  pip install Tensorflow
+
+- Python:               ```              3.3+ or Python 2.7           ```
+- OS:                   ```              Windows macOS or Linux       ```
+- Keras:                ```              pip install Keras            ```
+- Tensorflow:           ```              pip install Tensorflow       ```
+- dlib:                 ```              pip install dlib             ```
+- face-recognition:     ```              pip install face-recognition ```
 ```
 
 
