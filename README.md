@@ -62,7 +62,7 @@ model.add(Flatten())
 model.add(Activation("softmax"))
 model.summary()
 ```
-# About Layers:
+### About Layers:
 - Each conv2D layer extracts the features of the image according to the kernel filter. we used 3 * 3 kernels.
 - And on the Maxpool diapers; they select the entities with the highest resolutions among the 2 * 2 dimension entities.
 - Flatten Layer converts a tensor to a vector to send it to fully connected layers that use in the classification.
@@ -70,7 +70,7 @@ model.summary()
 
 Training the model
 -
-## In this step, using our augmented data, we start to train our model. 
+In this step, using our augmented data, we start to train our model. 
 ```
  #First we need to load a model file to save the training results (model weight).
 filepath = os.path.join('/emotion_detector_models/model.hdf5')  
