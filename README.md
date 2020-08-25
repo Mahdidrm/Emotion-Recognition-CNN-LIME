@@ -409,7 +409,7 @@ cv2.waitKey(0)
 cv2.destroyAllWindows()
 
    ```           
-Explainable AI  
+Explainable AI (XAI) 
 -
 Explainable AI (XAI) refers to methods and techniques in the application of artificial intelligence technology (AI) such that the results of the solution can be understood by humans. It contrasts with the concept of the "black box" in machine learning where even their designers cannot explain why the AI arrived at a specific decision.[1] XAI may be an implementation of the social right to explanation.[2] XAI is relevant even if there is no legal rights or regulatory requirements (for example, XAI can improve the user experience of a product or service by helping end users trust that the AI is making good decisions.)
 
@@ -418,7 +418,7 @@ The technical challenge of explaining AI decisions is sometimes known as the int
 AI systems optimize behavior to satisfy a mathematically-specified goal system chosen by the system designers, such as the command "maximize accuracy of assessing how positive film reviews are in the test dataset". The AI may learn useful general rules from the test-set, such as "reviews containing the word 'horrible'" are likely to be negative". However, it may also learn inappropriate rules, such as "reviews containing 'Daniel Day-Lewis' are usually positive"; such rules may be undesirable if they are deemed likely to fail to generalize outside the test set, or if people consider the rule to be "cheating" or "unfair". A human can audit rules in an XAI to get an idea how likely the system is to generalize to future real-world data outside the test-set.[3]
 
 
-Methods
+XAI Methods
 -
 - LIME
 
