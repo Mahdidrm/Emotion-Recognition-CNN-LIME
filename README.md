@@ -7,9 +7,9 @@ In this work, we followed two steps:
 
 Main Code
 -
-## Import the needed libraries
--   from __future__ import print_function
 ```
+Import the needed libraries
+from __future__ import print_function
 import keras
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
@@ -72,9 +72,10 @@ Training the model
 -
 ## In this step, using our augmented data, we start to train our model. 
 ```
-filepath = os.path.join('/emotion_detector_models/model.hdf5')   #First we need to load a model file to save the training results (model weight).
-                        
-checkpoint = keras.callbacks.ModelCheckpoint(filepath,           #We simply monitor the true values of the validation data during training and record the best values.
+ #First we need to load a model file to save the training results (model weight).
+filepath = os.path.join('/emotion_detector_models/model.hdf5')  
+#We simply monitor the true values of the validation data during training and record the best values.       
+checkpoint = keras.callbacks.ModelCheckpoint(filepath,           
                                             monitor='val_acc',      
                                             verbose=1,
                                             save_best_only=True,
