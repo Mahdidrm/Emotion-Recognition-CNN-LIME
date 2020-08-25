@@ -140,7 +140,7 @@ plt.show()
 ```
 
 
-<img src="Figures/Figure_1.png" width="300" height= "0.2" />
+![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/Figure_1.png?raw=true)
 
 Testing the model with validation data
 -
