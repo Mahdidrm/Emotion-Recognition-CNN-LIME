@@ -237,6 +237,7 @@ _ = plt.yticks(tick_marks, classes)
 
 
 - And the classification report:
+
 ![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/report.jpg?raw=true)
 
 Test on some of validation images
