@@ -2,22 +2,22 @@
 The main idea of this work is to apply several AI  methods  on the CNN classifier using the emotion datasets. The LIME and LRP algorithms are the objectives, but other methods will also be studied.
 
 ### In this work, we followed two steps: 
-
-``` 
+ 
 1- We used a convolution neural network (CNN) for the emotions recognition 
+
 2- Using the Lime algorithm to monitor the heat maps of the input image which help our CNN decide to select the corresponding emotion.
-```
+
 
 ### Requirements
 
 - Python:-------------------->             ```              3.3+ or Python 2.7                         ```
 - OS:------------------------>             ```              Windows macOS or Linux                     ```
 - Keras:--------------------->             ```              pip install Keras                          ```
-- Tensorflow:---------------->             ```              pip install Tensorflow                     ```
-- dlib:---------------------->             ```              pip install dlib                           ```
+- Tensorflow:--------------->             ```              pip install Tensorflow                     ```
+- dlib:----------------------->             ```              pip install dlib                           ```
 - face-recognition:---------->             ```              pip install face-recognition               ```
 - fer2013 dataset:----------->             ```              https://www.kaggle.com/deadskull7/fer2013  ```
-- LIME explaination AI:------>             ```              pip install lime                           ```
+- LIME explaination AI:----->             ```              pip install lime                           ```
 
 Fer2013 dataset
 -
