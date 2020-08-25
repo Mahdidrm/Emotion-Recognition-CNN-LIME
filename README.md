@@ -3,10 +3,37 @@ In this work, we followed two steps:
 1- We used a convolution neural network (CNN) for the emotions recognition
 2- Using the Lime algorithm to monitor the heat maps of the input image which help our CNN decide to select the corresponding emotion.
 
-For the first step, we used a handcrafted architecture from CNN with these layers:
+Main Code
+-
+# Import the needed libraries
+from __future__ import print_function
+import keras
+from keras.preprocessing.image import ImageDataGenerator
+from keras.models import Sequential
+from keras.layers import Dense, Dropout, Activation, Flatten, BatchNormalization
+from keras.layers import Conv2D, MaxPooling2D
+from keras.preprocessing.image import ImageDataGenerator
+import os
+from keras.models import Sequential
+from keras.layers.normalization import BatchNormalization
+from keras.layers.convolutional import Conv2D, MaxPooling2D
+from keras.layers.advanced_activations import ELU
+from keras.layers.core import Activation, Flatten, Dropout, Dense
+from keras.optimizers import RMSprop, SGD, Adam
+from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
+from keras import regularizers
+from keras.regularizers import l1
+
+# Initialing data
+num_classes = 7                                        # We have 7 Classes: Angry, Disgust, Fear, Happy, Natural, Sad and Surprise
+img_rows, img_cols = 48,48                             # The size of input image
+batch_size = 512                                       # The number of input pixels on model
+train_data_dir = '/src/fer2013/train'                  # Train data(contain 7 subfolder for each emotion)
+validation_data_dir = '/src/fer2013/validation/'       # Test data(contain 7 subfolder for each emotion)
 
 Creating the model
-- 
+-
+# For the first step, we used a handcrafted architecture from CNN with these layers: 
 model = Sequential()
 
 model.add(Conv2D(32, kernel_size=(3, 3), activation='relu',kernel_regularizer=regularizers.l2(0.0001),input_shape=(48,48,1)))
@@ -26,7 +53,10 @@ model.add(Flatten())
 model.add(Activation("softmax"))
 model.summary()
 
-Layers:
--
-Each /b conv2D /b layer extracts the features of the image according to the kernel filter. we used 3 * 3 kernels.
-And on the Maxpool diapers; they select the entities with the highest resolutions among the 2 * 2 dimension entities.
+# About Layers:
+- Each conv2D layer extracts the features of the image according to the kernel filter. we used 3 * 3 kernels.
+- And on the Maxpool diapers; they select the entities with the highest resolutions among the 2 * 2 dimension entities.
+- Flatten Layer converts a tensor to a vector to send it to fully connected layers that use in the classification.
+- The softmax activation is normally applied to the very last layer in a neural net, instead of using ReLU, sigmoid, tanh, or another activation function. The reason why softmax is useful is because it converts the output of the last layer in your neural network into what is essentially a probability distribution.
+
+
