@@ -222,7 +222,8 @@ _ = plt.xticks(tick_marks, classes, rotation=90)
 _ = plt.yticks(tick_marks, classes)
 ```
 
-### Test on some of validation images
+Test on some of validation images
+- 
 - In this step, we test our model in some of the validation images in our dataset.
 - First, we load some liberaries:
 ```
@@ -304,8 +305,11 @@ for i in range(0, len(files)):
 
 cv2.destroyAllWindows()
  ```           
-### Test on a single image out of our dataset (RGB or GrayScale)
- ``` 
+Test on a single image out of our dataset (RGB or GrayScale)
+-
+In this step, we check the capacity of our model trained on an image of our dataset
+- Fist, we load the needed librairies
+``` 
 import keras
 from keras.applications.imagenet_utils import decode_predictions
 from keras.models import load_model
@@ -321,8 +325,13 @@ from lime import lime_image
 import cv2
 from skimage.io import imread
 import matplotlib.pyplot as plt
+``` 
+And now we should load a face classifier to find the face on the input image. We use of haarcascade_frontalface face classifier.
+- Haar Cascade is a machine learning object detection algorithm used to identify objects in an image or video and based on the concept of features proposed by Paul Viola and Michael Jones in their paper "Rapid Object Detection using a Boosted Cascade of Simple Features" in 2001.
+- More Info: https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_objdetect/py_face_detection/py_face_detection.html
 
-face_classifier = cv2.CascadeClassifier('U:/Emotion/Classifications/OK/CNN-emotion-recognition/face_and_emotion_detection-master//Haarcascades/haarcascade_frontalface_default.xml')  #Haarcascades
+``` 
+face_classifier = cv2.CascadeClassifier('/Haarcascades/haarcascade_frontalface_default.xml') 
 
 def face_detector(img):
     # Convert image to grayscale
