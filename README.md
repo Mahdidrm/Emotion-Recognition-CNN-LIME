@@ -83,7 +83,8 @@ checkpoint = keras.callbacks.ModelCheckpoint(filepath,
 callbacks = [checkpoint]
 
 ```
-# At first we need to compile your model. We use Adam's optimization and cross entropy to reduce the loss value of our model.
+# Model compilation
+At first we need to compile your model. We use Adam's optimization and cross entropy to reduce the loss value of our model.
 ```
 model.compile(loss='categorical_crossentropy',optimizer=Adam(lr=0.0001, decay=1e-6),metrics=['accuracy'])  
 Adam is an optimization algorithm that can be used instead of the classical stochastic gradient descent procedure to update network weights iterative based in training data.
@@ -91,7 +92,8 @@ nb_train_samples = 31205# 28709          #Number of train samples
 nb_validation_samples = 6085 # 3589      #Number of test sample
 epochs = 50                              #Number of train and test loob
 ```
-# The main line to train our model. We train our model to augmented training and validation data.
+# Training the model
+The main line to train our model. We train our model to augmented training and validation data.
 ```
 model_info = model.fit_generator(                  
                                 train_generator,
