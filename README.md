@@ -166,7 +166,7 @@ plt.show()
 ```    
 Confusion Matrix of our model in some validation images
 -
-First, we need to import some libraries
+- First, we need to import some libraries
 ```
 import matplotlib.pyplot as plt
 import sklearn
@@ -174,16 +174,18 @@ import PIL
 from sklearn.metrics import classification_report, confusion_matrix
 import numpy as np
 ```
-And now we give the number of training and validation images
+- And now we give the number of training and validation images
 ```
 nb_train_samples =  4421          
 nb_validation_samples =4096     
 ```
-Some Augmentation data
+- Some data augmentation 
 ```
 validation_datagen = ImageDataGenerator(featurewise_center=True,
                                         featurewise_std_normalization=True)
- # We need to recreate our validation generator with shuffle = false
+```
+- We need to recreate our validation generator with shuffle = false
+```
 validation_generator = validation_datagen.flow_from_directory(
         validation_data_dir,
         color_mode = 'grayscale',
@@ -192,13 +194,15 @@ validation_generator = validation_datagen.flow_from_directory(
         class_mode='categorical',
         shuffle=False)
 ```
-Find the labels of Classes
+- Find the labels of Classes
 ```
 class_labels = validation_generator.class_indices
 class_labels = {v: k for k, v in class_labels.items()}
 classes = list(class_labels.values())
+```
 
-#Confution Matrix and Classification Report
+- Confution Matrix and Classification Report
+```
 Y_pred = model.predict_generator(validation_generator, nb_validation_samples // batch_size+1)
 y_pred = np.argmax(Y_pred, axis=1)
 
@@ -219,6 +223,8 @@ _ = plt.yticks(tick_marks, classes)
 ```
 
 ### Test on some of validation images
+- In this step, we test our model in some of the validation images in our dataset.
+- First, we load some liberaries:
 ```
 from keras.models import load_model
 from keras.optimizers import RMSprop, SGD, Adam
@@ -237,16 +243,18 @@ from keras.applications.imagenet_utils import decode_predictions
 from skimage.io import imread
 import matplotlib.pyplot as plt
 import numpy as np
-
-
+```
+- This function writes true and predicted class matches from images.
+```
 def draw_test(name, pred, im, true_label):
     BLACK = [0,0,0]
     expanded_image = cv2.copyMakeBorder(im, 160, 0, 0, 300 ,cv2.BORDER_CONSTANT,value=BLACK)
     cv2.putText(expanded_image, "predited - "+ pred, (20, 60) , cv2.FONT_HERSHEY_SIMPLEX,1, (0,0,255), 2)
     cv2.putText(expanded_image, "true - "+ true_label, (20, 120) , cv2.FONT_HERSHEY_SIMPLEX,1, (0,255,0), 2)
     cv2.imshow(name, expanded_image)
-
-
+```
+This function chooses some random images from our validation folder.
+```
 def getRandomImage(path, img_width, img_height):
     """function loads a random images from a random folder in our test path """
     folders = list(filter(lambda x: os.path.isdir(os.path.join(path, x)), os.listdir(path)))
@@ -258,22 +266,26 @@ def getRandomImage(path, img_width, img_height):
     image_name = file_names[random_file_index]
     final_path = file_path + "/" + image_name
     return image.load_img(final_path, target_size = (img_width, img_height),grayscale=True), final_path, path_class
-
-# Dimensions of our images
+```
+- Dimensions of our images
+```
 img_width, img_height = 48, 48
-
-# We use a very small learning rate 
+```
+- We use a very small learning rate 
+```
 model.compile(loss = 'categorical_crossentropy',
               optimizer = RMSprop(lr = 0.001),
               metrics = ['accuracy'])
-
+```
+- And now we give the address of the training folder and call the functions
+```
 files = []
 predictions = []
 true_labels = []
 
 # predicting images
 for i in range(0, 10):
-    path = 'U:/Emotion/Classifications/OK/CNN-emotion-recognition/face_and_emotion_detection-master/src/fer2013/validation/'# U:/Emotion/Classifications/res-emotion-mahdi/seg_train' 
+    path = '/src/fer2013/validation/' 
     img, final_path, true_label = getRandomImage(path, img_width, img_height)
     files.append(final_path)
     true_labels.append(true_label)
