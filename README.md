@@ -14,8 +14,8 @@
 - Keras:                   ```              pip install Keras            ```
 - Tensorflow:              ```              pip install Tensorflow       ```
 - dlib:                    ```              pip install dlib             ```
-- face-recognition:        ```              pip install face-recognition ```
-
+- face-recognition:        ```              pip install face-recognition  ```
+- fer2013 dataset          ```             https://www.kaggle.com/deadskull7/fer2013   ```
 
 
 ## Main Code
@@ -332,7 +332,9 @@ And now we should load a face classifier to find the face on the input image. We
 
 ``` 
 face_classifier = cv2.CascadeClassifier('/Haarcascades/haarcascade_frontalface_default.xml') 
-
+```
+- Face detection function
+```
 def face_detector(img):
     # Convert image to grayscale
     gray = cv2.cvtColor(img.copy(),cv2.COLOR_BGR2GRAY)
@@ -349,22 +351,24 @@ def face_detector(img):
         allfaces.append(roi_gray)
         rects.append((x,w,y,h))
     return rects, allfaces, img
-
-
-img20 = cv2.imread("U:/Emotion/Classifications/OK/CNN-emotion-recognition/face_and_emotion_detection-master/test_images/22.png")
+```
+- Load an image out of our dataset (GrayScale or RGB) and send to face detection function
+```
+img20 = cv2.imread("/test_images/22.png")
 rects, faces, image = face_detector(img20)
-
 i = 0
 for face in faces:
     roi = face.astype("float") / 255.0
     roi = img_to_array(roi)
     roi = np.expand_dims(roi, axis=0)
-
-    # make a prediction on the ROI, then lookup the class
+```
+- Make a prediction on the ROI, then lookup the class
+```
     preds = classifier.predict(roi)[0]
     label = class_labels[preds.argmax()]   
-
-    #Overlay our detected emotion on our pic
+```
+- Overlay our detected emotion on our pic
+```
     label_position = (rects[i][0] + int((rects[i][1]/2)), abs(rects[i][2] - 10))
     i =+ 1
     cv2.putText(image, label, label_position , cv2.FONT_HERSHEY_SIMPLEX,1, (0,255,0), 2)
@@ -373,16 +377,16 @@ cv2.waitKey(0)
 cv2.destroyAllWindows()
 
    ```           
-### Explainable AI  
-LIME
+Explainable AI  
 -
+- LIME
 ```
 import lime
 from lime import lime_image
 explainer = lime_image.LimeImageExplainer()
 explanation = explainer.explain_instance(roi[0], classifier.predict, top_labels=6)
 ```
-And We put a Mask on image to show the HeatMaps
+- And We put a Mask on image to show the HeatMaps
 ```
 from skimage.segmentation import mark_boundaries
 
