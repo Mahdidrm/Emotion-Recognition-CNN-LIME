@@ -442,4 +442,4 @@ Refrences
 
 3- "How AI detectives are cracking open the black box of deep learning". Science. 5 July 2017. Retrieved 30 January 2018. https://www.sciencemag.org/news/2017/07/how-ai-detectives-are-cracking-open-black-box-deep-learning
  
-4- Gilpin, Leilani H.; Bau, David; Yuan, Ben Z.; Bajwa, Ayesha; Specter, Michael; Kagal, Lalana (2018-05-31). "Explaining Explanations: An Overview of Interpretability of Machine Learning". arXiv:1806.00069 [stat.AI].
+4- Gilpin, Leilani H.; Bau, David; Yuan, Ben Z.; Bajwa, Ayesha; Specter, Michael; Kagal, Lalana (2018-05-31). "Explaining Explanations: An Overview of Interpretability of Machine Learning". arXiv:1806.00069 [stat.AI]. https://arxiv.org/abs/1806.00069
