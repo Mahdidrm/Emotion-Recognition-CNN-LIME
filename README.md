@@ -115,7 +115,7 @@ callbacks = [checkpoint]
 
 ```
 ### Model compilation
-- At first we need to compile your model. We use Adam's optimization and cross entropy to reduce the loss value of our model.
+- At first we need to compile our model. We use Adam's optimization and cross entropy to reduce the loss value of our model.
 ```
 model.compile(loss='categorical_crossentropy',optimizer=Adam(lr=0.0001, decay=1e-6),metrics=['accuracy'])  
 ```
