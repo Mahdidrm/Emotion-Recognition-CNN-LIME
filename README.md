@@ -423,6 +423,19 @@ XAI Methods
 - LIME
 
 LIME is a novel explanation technique that explains the predictions of any classifier in an interpretable and faithful manner, by learning an interpretable model locally around the prediction. [5]
+In lime we have two main steps:
+- “Preprocessing”
+1- The ground truth image is first segmented into different sections using Quickshift segmentation.
+2- The next step is to generate N data samples by randomly masking out some of the image regions based on the segmentations.
+This is resulted in a data matrix of "samples x segmentations" where the first row is kept with no mask applied (all 1).
+3- Each sample is weighted based on how much it is different from the original vector (row 1) using some ‘distance’ function.
+
+- “Explanation”
+4- Each data sample (masked/pertubed image) is passed to the classifier (the model being explained e.g. our emotion classifier) for the prediction.
+5- The data instances (binaries) with the corresponding weights (step 3) and the predicted label (step 4- but one label at the time) are then fit to the K-LASSO or Ridge regression classifier to measure the importance of each feature (segmentation in this case).
+6- The final output are the weights, which are representing significance of each segmented feature on the given class.
+7- The positive (support) and negative (against) segments/features are display based on the given thresholding value
+(e.g. ‘0’ as the separating boundary of being supportive or not).
 ```
 import lime
 from lime import lime_image
