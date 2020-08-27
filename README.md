@@ -447,6 +447,8 @@ This is resulted in a data matrix of "samples x segmentations" where the first r
 
 5- The data instances (binaries) with the corresponding weights (step 3) and the predicted label (step 4- but one label at the time) are then fit to the K-LASSO or Ridge regression classifier to measure the importance of each feature (segmentation in this case).
 
+- Ridge Regression is a technique for analyzing multiple regression data that suffer from multicollinearity. When multicollinearity occurs, least squares estimates are unbiased, but their variances are large so they may be far from the true value.
+
 6- The final output are the weights, which are representing significance of each segmented feature on the given class.
 
 7- The positive (support) and negative (against) segments/features are display based on the given thresholding value
