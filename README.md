@@ -496,19 +496,31 @@ import lime
 from lime import lime_image
 from lime.wrappers.scikit_image import SegmentationAlgorithm
 
+def new_predict_fn(img):
+    img = np.asarray(img, dtype = np.float32)
+    # normalizing the image
+    img = img / 255
+    # reshaping the image into a 4D array
+    img = img.reshape( -1, 48, 48, 3)  
+    return model.predict(img)
+    
 explainer = lime_image.LimeImageExplainer(verbose = False)
 segmenter = SegmentationAlgorithm('slic', n_segments=100, compactness=1, sigma=1)
-explanation = explainer.explain_instance(roi[0], classifier.predict_proba, top_labels=6, hide_color=0, num_samples=10000, segmentation_fn=segmenter)
+img = cv2.imread("U:/Emotion/Classifications/OK/CNN-emotion-recognition/face_and_emotion_detection-master/test_images/21.png")
+explanation = explainer.explain_instance(img, new_predict_fn, top_labels=6, hide_color=0, num_samples=10000, segmentation_fn=segmenter,  batch_size=1)
 
 ```
 - And We put a Mask on image to show the HeatMaps
 ```
-from skimage.color import label2rgb
-temp, mask = explanation.get_image_and_mask(explanation.top_labels[1], positive_only=True, num_features=5, hide_rest=False)
+from skimage.segmentation import mark_boundaries
+temp, mask = explanation.get_image_and_mask(explanation.top_labels[1], positive_only=False, num_features=5, hide_rest=True)
 plt.imshow(mark_boundaries(temp / 2 + 0.5, mask))
+
 
  ```
 
+
+    
 Refrences
 -
 [1] Sample, Ian (5 November 2017). "Computer says no: why making AIs fair, accountable and transparent is crucial". the Guardian. Retrieved 30 January 2018. https://www.theguardian.com/science/2017/nov/05/computer-says-no-why-making-ais-fair-accountable-and-transparent-is-crucial
