@@ -16,13 +16,14 @@ The main idea of this work is to apply several AI  methods  on the CNN classifie
 - Tensorflow:--------------->             ```              pip install Tensorflow                     ```
 - dlib:----------------------->             ```              pip install dlib                           ```
 - face-recognition:---------->             ```              pip install face-recognition               ```
-- fer2013 dataset:----------->             ```              https://www.kaggle.com/deadskull7/fer2013  ```
 - LIME explaination AI:----->             ```              pip install lime                           ```
 - pandas: ------------------>             ```             pip install pandas                         ```
 - numpy:-------------------->             ```              pip install numpy                          ```
 - h5py:---------------------->             ```              pip install h5py                           ```
-- opencv-python---------->          ```             pip install opencv-python                   ```
+- opencv-python---------->                ```             pip install opencv-python                   ```
 
+- fer2013 dataset:----------->             ```              https://www.kaggle.com/deadskull7/fer2013  ```
+- CK+ dataset: ----------->         ```       https://www.pitt.edu/~emotion/ck-spread.htm       ```
 
 Fer2013 dataset
 -
