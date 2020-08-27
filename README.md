@@ -1,5 +1,5 @@
 # Emotion-Recognition via CNN and Explaination AI (LIME algorithm)
-The main idea of this work is to apply several AI  methods  on the CNN classifier using the emotion datasets.The Fer2013 and CK + datasets are used via the proposed method and the result is presented in the following sections. As a novelty of our work,in the last part of this code, the LIME and LRP explanation AI algorithms are the objectives, but other methods will also be studied. 
+The main idea of this work is to apply several AI  methods  on the CNN classifier using the emotion datasets. Fer2013 and CK + datasets are used via the proposed method and the result is presented in the following sections. As a novelty of our work,in the last part of this code, the LIME and LRP explanation AI algorithms are the objectives, but other methods will also be studied. 
 
 ### In this work, we followed two steps: 
  
@@ -35,6 +35,16 @@ Fer2013 dataset
 
    This dataset was prepared by Pierre-Luc Carrier and Aaron Courville, as part of an ongoing research project. They have graciously provided the workshop organizers with a preliminary version of their dataset to use for this contest.
 
+CK+ dataset
+- 
+   In 2000, the Cohn-Kanade (CK) database was released for the purpose of promoting research into automatically detecting individual facial expressions. Since then, the CK database has become one of the most widely used test-beds for algorithm development and evaluation. During this period, three limitations have become apparent: 
+   
+ 1) While AU codes are well validated, emotion labels are not, as they refer to what was requested rather than what was actually performed,
+ 
+ 2) The lack of a common performance metric against which to evaluate new algorithms, and 3) Standard protocols for common databases have not emerged.
+ 
+ As a consequence, the CK database has been used for both AU and emotion detection (even though labels for the latter have not been validated), comparison with benchmark algorithms is missing, and use of random subsets of the original database makes meta-analyses difficult. To address these and other concerns, we present the Extended Cohn-Kanade (CK+) database. The number of sequences is increased by 22% and the number of subjects by 27%. The target expression for each sequence is fully FACS coded and emotion labels have been revised and validated. In addition to this, non-posed sequences for several types of smiles and their associated metadata have been added. We present baseline results using Active Appearance Models (AAMs) and a linear support vector machine (SVM) classifier using a leave-one-out subject cross-validation for both AU and emotion detection for the posed data. The emotion and AU labels, along with the extended image data and tracked landmarks will be made available July 2010.
+ 
 ### Note:
 In our work we converted CSV files to the images.
 
