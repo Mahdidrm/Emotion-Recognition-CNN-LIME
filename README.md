@@ -174,6 +174,7 @@ plt.show()
 ![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/Figure_1.png?raw=true)
 
 - The output of training step on CK+:
+
 ![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/CK-train-loss.png?raw=true)
 
 Testing the model with validation data
@@ -206,6 +207,7 @@ plt.show()
 ![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/test.png?raw=true)
 
 - The output of validation step on CK+:
+
 ![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/CK-validation.png?raw=true)
 
 
