@@ -423,6 +423,7 @@ XAI Methods
 - LIME
 
 LIME is a novel explanation technique that explains the predictions of any classifier in an interpretable and faithful manner, by learning an interpretable model locally around the prediction. [5]
+
 In lime we have two main steps:
 ![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/12.jpg?raw=true)
 
