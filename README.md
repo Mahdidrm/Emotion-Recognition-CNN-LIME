@@ -453,6 +453,8 @@ This is resulted in a data matrix of "samples x segmentations" where the first r
 
 7- The positive (support) and negative (against) segments/features are display based on the given thresholding value
 (e.g. ‘0’ as the separating boundary of being supportive or not).
+
+- LIME code for our work:
 ```
 import lime
 from lime import lime_image
