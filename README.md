@@ -1,5 +1,5 @@
 # Emotion-Recognition via CNN and Explaination AI (LIME algorithm)
-The main idea of this work is to apply several AI  methods  on the CNN classifier using the emotion datasets. The LIME and LRP algorithms are the objectives, but other methods will also be studied.
+The main idea of this work is to apply several AI  methods  on the CNN classifier using the emotion datasets.The Fer2013 and CK + datasets are used via the proposed method and the result is presented in the following sections. As a novelty of our work,in the last part of this code, the LIME and LRP explanation AI algorithms are the objectives, but other methods will also be studied. 
 
 ### In this work, we followed two steps: 
  
