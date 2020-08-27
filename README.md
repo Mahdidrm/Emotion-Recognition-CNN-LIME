@@ -506,11 +506,11 @@ def new_predict_fn(img):
     
 explainer = lime_image.LimeImageExplainer(verbose = False)
 segmenter = SegmentationAlgorithm('slic', n_segments=100, compactness=1, sigma=1)
-img = cv2.imread("U:/Emotion/Classifications/OK/CNN-emotion-recognition/face_and_emotion_detection-master/test_images/21.png")
+img = cv2.imread("/test_images/21.png")
 explanation = explainer.explain_instance(img, new_predict_fn, top_labels=6, hide_color=0, num_samples=10000, segmentation_fn=segmenter,  batch_size=1)
 
 ```
-- And We put a Mask on image to show the HeatMaps
+- And we put a Mask on image to show the HeatMaps
 ```
 from skimage.segmentation import mark_boundaries
 temp, mask = explanation.get_image_and_mask(explanation.top_labels[1], positive_only=False, num_features=5, hide_rest=True)
