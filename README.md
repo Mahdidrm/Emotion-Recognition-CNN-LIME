@@ -427,6 +427,7 @@ In lime we have two main steps:
 ![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/12.jpg?raw=true)
 
 - “Preprocessing”
+
 1- The ground truth image is first segmented into different sections using Quickshift segmentation.
 
 2- The next step is to generate N data samples by randomly masking out some of the image regions based on the segmentations.
