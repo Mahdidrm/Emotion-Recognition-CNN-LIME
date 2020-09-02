@@ -113,7 +113,9 @@ About Layers:
 - Each conv2D layer extracts the features of the image according to the kernel filter. we used 3 * 3 kernels.
 - And on the Maxpool diapers; they select the entities with the highest resolutions among the 2 * 2 dimension entities.
 - Flatten Layer converts a tensor to a vector to send it to fully connected layers that use in the classification.
-- The softmax activation is normally applied to the very last layer in a neural net, instead of using ReLU, sigmoid, tanh, or another activation function. The reason why softmax is useful is because it converts the output of the last layer in your neural network into what is essentially a probability distribution.
+- The softmax activation is normally applied to the very last layer in a neural net, instead of using ReLU, sigmoid, 
+tanh, or another activation function. The reason why softmax is useful is because it converts the output of
+the last layer in your neural network into what is essentially a probability distribution.
 ```
 ### Train the model
 
