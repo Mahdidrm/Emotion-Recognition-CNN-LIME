@@ -526,12 +526,15 @@ import numpy as np
 ```
 - At firs we need to load our saved model
 ```
-model.load_weights(os.path.join('U:/Emotion/Classifications/NEW-CNN/models/modelCK48-cnn1.hdf5'))
+model.load_weights(os.path.join('/modelCK48-cnn1.hdf5'))
 ```
 - Now we define our fuctions:
 1- new_predict_fn uses to reshape the input image, then calculate its prediction.
+
 2- new_predict_fn_proba uses to find the probability class of the input image.
+
 3- getLabel uses to find the class tag corresponding to the problematic class in the image. This means that when we get the probability of an image, we need to get the class name of that number to display in our plot.
+
 ```
 def new_predict_fn(img):
     img = np.asarray(img, dtype = np.float32)
@@ -562,7 +565,38 @@ def new_predict_generator_fn(img):
 
 - And we put a Mask on image to show the HeatMaps
 ```
-
+- Now, according to LIME algorithm, we should define our explainer and our segmentation algorithm:
+```
+explainer = lime_image.LimeImageExplainer(verbose = False)
+segmenter = SegmentationAlgorithm('slic', n_segments=100, compactness=1, sigma=1)
+```
+- We load an image as our input:
+```
+img5 = cv2.imread("U:/Emotion/Classifications/NEW-CNN/00/1/9481_4.jpg")
+```
+- In this step, with the help of two explained functions "new_predict_fn" and "new_predict_fn_proba" we obtain the prediction and the probability of the input image:
+```
+pipe_pred_test = new_predict_fn(img5)
+pipe_pred_prop = new_predict_fn_proba(img5)
+```
+- And now we do our explanation using the input image, the prediction of the classifier model and other parameters.
+```
+explanation=explainer.explain_instance(img5, 
+                                      classifier_fn = model.predict_proba, 
+                                      top_labels=7, hide_color=0, num_samples=10000, segmentation_fn=segmenter)
+```
+- At the end of the algorithm, we trace the results. Below we have checked the likelihood of image belonging to each class.
+```
+fig, m_axs = plt.subplots(1,7, figsize = (15,7))
+for i, (c_ax) in zip(explanation.top_labels, m_axs.T):
+    temp, mask = explanation.get_image_and_mask(explanation.top_labels[0],
+                                                positive_only=True, 
+                                                num_features=5,
+                                                hide_rest=False,
+                                                min_weight=0.01)
+    c_ax.imshow(label2rgb(mask,temp, bg_label = 0), interpolation = 'nearest')
+    c_ax.set_title('Positive for {}\nScore:{:2.2f}%'.format(getLabel(i), 100*pipe_pred_prop[0, i]))
+    c_ax.axis('off')
 
  ```
 
