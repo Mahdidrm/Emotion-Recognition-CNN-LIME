@@ -1,5 +1,5 @@
 # Emotion-Recognition via CNN and Explaination AI (LIME algorithm)
-The main idea of this work is to apply several AI  methods  on the CNN classifier using the emotion datasets. Fer2013 and CK + datasets are used via the proposed method and the result is presented in the following sections. As a novelty of our work,in the last part of this code, the LIME and LRP explanation AI algorithms are the objectives, but other methods will also be studied. 
+The main idea of this work is to apply several XAI methods like LIME on the CNN classifier applying on emotion datasets. Fer2013 and CK + datasets are used via the proposed method and the result is presented in the following sections. As a novelty of our work,in the last part of this code, the LIME and LRP explanation AI algorithms are the objectives, but other methods will also be studied. 
 
 ### In this work, we followed two steps: 
  
@@ -52,59 +52,80 @@ CK+ dataset
 ## Main Code
 Import the needed libraries
 ```
-
 from __future__ import print_function
 import keras
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten, BatchNormalization
 from keras.layers import Conv2D, MaxPooling2D
-from keras.preprocessing.image import ImageDataGenerator
 import os
-from keras.models import Sequential
-from keras.layers.normalization import BatchNormalization
-from keras.layers.convolutional import Conv2D, MaxPooling2D
 from keras.layers.advanced_activations import ELU
-from keras.layers.core import Activation, Flatten, Dropout, Dense
 from keras.optimizers import RMSprop, SGD, Adam
 from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 from keras import regularizers
 from keras.regularizers import l1
+import cv2
+import lime
+from lime import lime_image
+from lime.wrappers.scikit_image import SegmentationAlgorithm
+from skimage.segmentation import mark_boundaries
+from skimage.color import label2rgb
 ```
 Initialing data
 - 
 ```
-num_classes = 7                                        # We have 7 Classes: Angry, Disgust, Fear, Happy, Natural, Sad and Surprise
-img_rows, img_cols = 48,48                             # The size of input image
-batch_size = 512                                       # The number of input pixels for augmentation
-train_data_dir = '/src/fer2013/train'                  # Train data(contain 7 subfolder for each emotion)
-validation_data_dir = '/src/fer2013/validation/'       # Test data(contain 7 subfolder for each emotion)
+#%% Initioaling
+num_classes =7                                 # We have 7 Classes: Angry, Disgust, Fear, Happy, Natural, Sad and Surprise
+img_rows, img_cols = 48,48                     # The size of input images
+batch_size = 128                               # The number of input pixels for augmentation
+
+train_data_dir = '/CKFace481/training'         # Train data(contain 7 subfolder for each emotion)
+validation_data_dir = '/CKFace481/validation'  # Test data(contain 7 subfolder for each emotion)
 ```
 Use some data augmentation
 -
 - Use ImageDataGenerator to create fake samples to help our network learn better and avoid overfitting. We perform a rescale, rotation_range, shear_range, zoom_range, horizontal_flip to do training, validation and test data.
-        
+```
+val_datagen = ImageDataGenerator(rescale=1./255)
+train_datagen = ImageDataGenerator(
+        rescale=1./255,
+      rotation_range=30,
+      shear_range=0.3,
+      zoom_range=0.3,
+      horizontal_flip=True,
+      fill_mode='nearest')
+train_generator = train_datagen.flow_from_directory(
+        train_data_dir,
+        target_size=(48,48),
+        batch_size=batch_size,
+        color_mode="rgb",
+        class_mode='categorical')
+
+validation_generator = val_datagen.flow_from_directory(
+        validation_data_dir,
+        target_size=(48,48), 
+        batch_size=batch_size,
+        color_mode="rgb",
+        class_mode='categorical')
+  ```   
 Creating the model
 -
 -   For the first step, we used a handcrafted architecture from CNN with these layers: 
 ```
 model = Sequential()
-
-model.add(Conv2D(32, kernel_size=(3, 3), activation='relu',kernel_regularizer=regularizers.l2(0.0001),input_shape=(48,48,1)))
+model.add(Conv2D(32, kernel_size=(3, 3), activation='relu',kernel_regularizer=regularizers.l2(0.0001),input_shape=(48,48,3)))
 model.add(Conv2D(64, kernel_size=(3, 3), activation='relu',kernel_regularizer=regularizers.l2(0.0001)))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-
 model.add(Conv2D(128, kernel_size=(3, 3), activation='relu', kernel_regularizer=regularizers.l2(0.0001)))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-
 model.add(Conv2D(128, kernel_size=(3, 3), activation='relu', kernel_regularizer=regularizers.l2(0.0001)))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-
 model.add(Conv2D(6, kernel_size=(1, 1), activation='relu', kernel_regularizer=regularizers.l2(0.0001)))
 model.add(Conv2D(7, kernel_size=(4, 4), activation='relu', kernel_regularizer=regularizers.l2(0.0001)))
-
 model.add(Flatten())
+model.add(Dropout(0.5))
 model.add(Activation("softmax"))
+
 model.summary()
 ```
 About Layers:
@@ -144,17 +165,19 @@ nb_train_samples = 31205           #Number of train samples
 nb_validation_samples = 6085       #Number of test sample
 epochs = 50                        #Number of train and test loob
 ```
-### Train Step
+### Training Step
 
 The main line to train our model. We train our model to augmented training and validation data.
 ```
-model_info = model.fit_generator(                  
-                                train_generator,
-                                steps_per_epoch=nb_train_samples // batch_size,
-                                epochs=epochs,
-                                callbacks = callbacks,
-                                validation_data=validation_generator,
-                                validation_steps=nb_validation_samples // batch_size)
+epochs = 50
+model_info = model.fit_generator(
+            train_generator,
+            steps_per_epoch=nb_train_samples // batch_size,
+            epochs=epochs,
+            callbacks = callbacks,
+            validation_data=validation_generator,
+            validation_steps=nb_validation_samples // batch_size)
+
 
 model.save_weights('/emotion_detector_models/model.hdf5')
 ```
@@ -186,7 +209,7 @@ Here we test our trained model using our validation data
 model_info = model.fit_generator(
             train_generator,
             steps_per_epoch=nb_train_samples // batch_size,
-            epochs=epochs,
+            epochs=20,
             callbacks = callbacks,
             validation_data=validation_generator,
             validation_steps=nb_validation_samples // batch_size)
@@ -494,10 +517,22 @@ This is resulted in a data matrix of "samples x segmentations" where the first r
 
 - LIME code for our work:
 ```
-import lime
-from lime import lime_image
-from lime.wrappers.scikit_image import SegmentationAlgorithm
-
+#Import the libraries
+from keras.models import load_model
+import matplotlib.pyplot as plt
+import sklearn
+from sklearn.metrics import classification_report, confusion_matrix
+import numpy as np
+```
+- At firs we need to load our saved model
+```
+model.load_weights(os.path.join('U:/Emotion/Classifications/NEW-CNN/models/modelCK48-cnn1.hdf5'))
+```
+- Now we define our fuctions:
+1- new_predict_fn uses to reshape the input image, then calculate its prediction.
+2- new_predict_fn_proba uses to find the probability class of the input image.
+3- getLabel uses to find the class tag corresponding to the problematic class in the image. This means that when we get the probability of an image, we need to get the class name of that number to display in our plot.
+```
 def new_predict_fn(img):
     img = np.asarray(img, dtype = np.float32)
     # normalizing the image
@@ -505,18 +540,28 @@ def new_predict_fn(img):
     # reshaping the image into a 4D array
     img = img.reshape( -1, 48, 48, 3)  
     return model.predict(img)
-    
-explainer = lime_image.LimeImageExplainer(verbose = False)
-segmenter = SegmentationAlgorithm('slic', n_segments=100, compactness=1, sigma=1)
-img = cv2.imread("/test_images/21.png")
-explanation = explainer.explain_instance(img, new_predict_fn, top_labels=6, hide_color=0, num_samples=10000, segmentation_fn=segmenter,  batch_size=1)
 
-```
+def new_predict_fn_proba(img):
+    img = np.asarray(img, dtype = np.float32)
+    # normalizing the image
+    img = img / 255
+    # reshaping the image into a 4D array
+    img = img.reshape( -1, 48, 48, 3)  
+    return model.predict_proba(img)
+
+def getLabel(id):
+    return ['Angry', 'Disgust','Fear','Happy','Natural', 'Sad','Surprise'][id]
+
+def new_predict_generator_fn(img):
+    img = np.asarray(img, dtype = np.float32)
+    # normalizing the image
+    img = img / 255
+    # reshaping the image into a 4D array
+    img = img.reshape( -1, 48, 48, 3)  
+    return model.predict_generator(img,validation_generator, nb_validation_samples // batch_size+1)
+
 - And we put a Mask on image to show the HeatMaps
 ```
-from skimage.segmentation import mark_boundaries
-temp, mask = explanation.get_image_and_mask(explanation.top_labels[1], positive_only=False, num_features=5, hide_rest=True)
-plt.imshow(mark_boundaries(temp / 2 + 0.5, mask))
 
 
  ```
