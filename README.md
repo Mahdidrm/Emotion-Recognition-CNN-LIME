@@ -141,9 +141,9 @@ the last layer in your neural network into what is essentially a probability dis
 - How define the layer's dimensions
 ```
 To create convolutional layer, we use tf.nn.conv2d. It computes a 2-D convolution given 4-D input and filter tensors.
-
-Inputs:
-
+```
+- Inputs:
+```
 tensor of shape [batch, in_height, in_width, in_channels]. x of shape [batch_size,28 ,28, 1]
 a filter / kernel tensor of shape [filter_height, filter_width, in_channels, out_channels]. W is of size [5, 5, 1, 32]
 stride which is [1, 1, 1, 1]. The convolutional layer, slides the "kernel window" across the input tensor. As the input tensor has 4 dimensions: [batch, height, width, channels], then the convolution operates on a 2D window on the height and width dimensions. strides determines how much the window shifts by in each of the dimensions. As the first and last dimensions are related to batch and channels, we set the stride to 1. But for second and third dimension, we could set other values, e.g. [1, 2, 2, 1]
@@ -152,8 +152,9 @@ Process:
 Change the filter to a 2-D matrix with shape [5*5*1,32]
 Extracts image patches from the input tensor to form a virtual tensor of shape [batch, 28, 28, 5*5*1].
 For each batch, right-multiplies the filter matrix and the image vector.
-Output:
-
+```
+- Output:
+```
 A Tensor (a 2-D convolution) of size tf.Tensor 'add_7:0' shape=(?, 28, 28, 32)- Notice: the output of the first convolution layer is 32 [28x28] images. Here 32 is considered as volume/depth of the output image
 ```
 
