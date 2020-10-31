@@ -140,7 +140,6 @@ the last layer in your neural network into what is essentially a probability dis
 ```
 - How define the layer's dimensions
 ```
-Convolve with weight tensor and add biases.
 To create convolutional layer, we use tf.nn.conv2d. It computes a 2-D convolution given 4-D input and filter tensors.
 
 Inputs:
