@@ -53,23 +53,35 @@ CK+ dataset
 Import the needed libraries
 ```
 from __future__ import print_function
-import keras
+import tensorflow as tf
+import tensorflow.keras
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten, BatchNormalization
 from keras.layers import Conv2D, MaxPooling2D
+from keras.preprocessing.image import ImageDataGenerator
 import os
+from keras.models import Sequential
+from keras.layers.normalization import BatchNormalization
+from keras.layers.convolutional import Conv2D, MaxPooling2D
 from keras.layers.advanced_activations import ELU
+from keras.layers.core import Activation, Flatten, Dropout, Dense
 from keras.optimizers import RMSprop, SGD, Adam
 from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 from keras import regularizers
 from keras.regularizers import l1
+
+from tensorflow.python.client import device_lib
+
+from keras import backend as K
+
 import cv2
 import lime
 from lime import lime_image
 from lime.wrappers.scikit_image import SegmentationAlgorithm
 from skimage.segmentation import mark_boundaries
 from skimage.color import label2rgb
+
 ```
 Initialing data
 - 
@@ -77,7 +89,7 @@ Initialing data
 #%% Initioaling
 num_classes =7                                 # We have 7 Classes: Angry, Disgust, Fear, Happy, Natural, Sad and Surprise
 img_rows, img_cols = 48,48                     # The size of input images
-batch_size = 128                               # The number of input pixels for augmentation
+batch_size = 50                               # The number of input pixels for augmentation
 
 train_data_dir = '/CKFace481/training'         # Train data(contain 7 subfolder for each emotion)
 validation_data_dir = '/CKFace481/validation'  # Test data(contain 7 subfolder for each emotion)
@@ -94,6 +106,7 @@ train_datagen = ImageDataGenerator(
       zoom_range=0.3,
       horizontal_flip=True,
       fill_mode='nearest')
+
 train_generator = train_datagen.flow_from_directory(
         train_data_dir,
         target_size=(48,48),
@@ -107,25 +120,39 @@ validation_generator = val_datagen.flow_from_directory(
         batch_size=batch_size,
         color_mode="rgb",
         class_mode='categorical')
+print(validation_generator.class_indices)
+
   ```   
 Creating the model
 -
 -   For the first step, we used a handcrafted architecture from CNN with these layers: 
 ```
-model = Sequential()
-model.add(Conv2D(32, kernel_size=(3, 3), activation='relu',kernel_regularizer=regularizers.l2(0.0001),input_shape=(48,48,3)))
-model.add(Conv2D(64, kernel_size=(3, 3), activation='relu',kernel_regularizer=regularizers.l2(0.0001)))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Conv2D(128, kernel_size=(3, 3), activation='relu', kernel_regularizer=regularizers.l2(0.0001)))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Conv2D(128, kernel_size=(3, 3), activation='relu', kernel_regularizer=regularizers.l2(0.0001)))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Conv2D(6, kernel_size=(1, 1), activation='relu', kernel_regularizer=regularizers.l2(0.0001)))
-model.add(Conv2D(7, kernel_size=(4, 4), activation='relu', kernel_regularizer=regularizers.l2(0.0001)))
-model.add(Flatten())
-model.add(Dropout(0.5))
-model.add(Activation("softmax"))
+# Create the model
 
+model =Sequential()
+model.add(Conv2D(32, kernel_size=(3, 3), activation='relu',padding='same', kernel_regularizer=regularizers.l2(0.0001),input_shape=(48,48,3)))
+# model.add(BatchNormalization())
+model.add(Conv2D(64, kernel_size=(3, 3), activation='relu',padding='same', kernel_regularizer=regularizers.l2(0.0001)))
+# model.add(BatchNormalization())
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.2))
+model.add(Conv2D(128, kernel_size=(3, 3), activation='relu',padding='same', kernel_regularizer=regularizers.l2(0.0001)))
+model.add(BatchNormalization())
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Conv2D(128, kernel_size=(3, 3), activation='relu',padding='same', kernel_regularizer=regularizers.l2(0.0001)))
+# model.add(BatchNormalization())
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Conv2D(6, kernel_size=(1, 1), activation='relu',padding='same', kernel_regularizer=regularizers.l2(0.0001)))
+# model.add(BatchNormalization())
+model.add(Conv2D(7, kernel_size=(4, 4), activation='relu',padding='same', kernel_regularizer=regularizers.l2(0.0001)))
+# model.add(BatchNormalization())
+model.add(Flatten())
+model.add(Dense(64))
+model.add(Activation("relu"))
+model.add(Dropout(0.2))
+model.add(Dense(32))
+model.add(Dense(7))
+model.add(Activation("softmax"))
 model.summary()
 ```
 About Layers:
@@ -167,18 +194,24 @@ filepath = os.path.join('/emotion_detector_models/model.hdf5')
 ```
 Then, we simply monitor the true values of the validation data during training and record the best values:
 ```
-checkpoint = keras.callbacks.ModelCheckpoint(filepath,           
-                                            monitor='val_acc',      
-                                            verbose=1,
-                                            save_best_only=True,
-                                            mode='max')
+#%% Make some check points
+import keras
+checkpoint = keras.callbacks.ModelCheckpoint(filepath,
+                                             monitor='val_acc',
+                                             verbose=1,
+                                             save_best_only=True,
+                                             mode='max')
 callbacks = [checkpoint]
 
 ```
 ### Model compilation
 - At first we need to compile our model. We use Adam's optimization and cross entropy to reduce the loss value of our model.
 ```
-model.compile(loss='categorical_crossentropy',optimizer=Adam(lr=0.0001, decay=1e-6),metrics=['accuracy'])  
+#%%  Compile the model
+
+model.compile(loss='categorical_crossentropy',optimizer=Adam(lr=0.0001, decay=1e-6),metrics=['accuracy'])
+nb_train_samples = 2032
+nb_validation_samples = 1235 
 ```
 - Adam is an optimization algorithm that can be used instead of the classical stochastic gradient descent procedure to update network weights iterative based in training data.
 ```
@@ -190,7 +223,9 @@ epochs = 50                        #Number of train and test loob
 
 The main line to train our model. We train our model to augmented training and validation data.
 ```
-epochs = 50
+#%% Training the model
+
+epochs = 100
 model_info = model.fit_generator(
             train_generator,
             steps_per_epoch=nb_train_samples // batch_size,
@@ -198,147 +233,110 @@ model_info = model.fit_generator(
             callbacks = callbacks,
             validation_data=validation_generator,
             validation_steps=nb_validation_samples // batch_size)
-
-
-model.save_weights('/emotion_detector_models/model.hdf5')
 ```
 Plot model loss in train step
 -
 ```
 print(model_info.history.keys())
 from matplotlib import pyplot as plt
-plt.plot(model_info.history['loss'])       #Plot the loss value of training step
-plt.plot(model_info.history['val_loss'])   #plot the Validation loss 
-plt.title('model loss in train step')     
-plt.ylabel('loss')
-plt.xlabel('epoch') 
-plt.legend(['train', 'test'], loc='upper left')
-plt.show()
-```
-- The output of training step on Fer2013:
-
-![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/Figure_1.png?raw=true)
-
-- The output of training step on CK+:
-
-![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/CK-train-loss.png?raw=true)
-
-Testing the model with validation data
--
-Here we test our trained model using our validation data
-```
-model_info = model.fit_generator(
-            train_generator,
-            steps_per_epoch=nb_train_samples // batch_size,
-            epochs=20,
-            callbacks = callbacks,
-            validation_data=validation_generator,
-            validation_steps=nb_validation_samples // batch_size)
-```
-Plot model loss in train step
--
-And then we show the train loss of model
-```
-from matplotlib import pyplot as plt
 plt.plot(model_info.history['loss'])
 plt.plot(model_info.history['val_loss'])
-plt.title('Model loss in Test step')
+plt.title('Model loss in Train step')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
-```    
-- The output of validation step on Fer2013: 
+```
 
-![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/test.png?raw=true)
 
-- The output of validation step on CK+:
+- The loss of training step on CK+:
 
-![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/CK-validation.png?raw=true)
+![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/ck_train_loss.png?raw=true)
+```
+#%% Plot Model loss in validation step
+from matplotlib import pyplot as plt
+
+plt.plot(model_info.history['acc'])
+plt.plot(model_info.history['val_acc'])
+plt.title('Model accuracy rate in Test step')
+plt.ylabel('accuracy')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.show()
+```
+- The accuracy of training step on CK+:
+
+![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/ck_train_acc.png?raw=true)
 
 
 Confusion Matrix of our model in some validation images
 -
 - First, we need to import some libraries
 ```
-import matplotlib.pyplot as plt
+#%% classification_report
 import sklearn
-import PIL
 from sklearn.metrics import classification_report, confusion_matrix
 import numpy as np
+import sklearn.metrics as metrics
 ```
-- And now we give the number of training and validation images
+- Confution Matrix and Classification Report
 ```
-nb_train_samples =  4421          
-nb_validation_samples =4096     
-```
-- Some data augmentation 
-```
-validation_datagen = ImageDataGenerator(featurewise_center=True,
-                                        featurewise_std_normalization=True)
-```
-- We need to recreate our validation generator with shuffle = false
-```
-validation_generator = validation_datagen.flow_from_directory(
+test_generator = ImageDataGenerator()
+test_data_generator = test_generator.flow_from_directory(
         validation_data_dir,
-        color_mode = 'grayscale',
+        color_mode = 'rgb',
         target_size=(img_rows, img_cols),
         batch_size=batch_size,
         class_mode='categorical',
         shuffle=False)
-```
-- Find the labels of Classes
-```
-class_labels = validation_generator.class_indices
-class_labels = {v: k for k, v in class_labels.items()}
-classes = list(class_labels.values())
+test_steps_per_epoch = np.math.ceil(test_data_generator.samples / test_data_generator.batch_size)
+
+predictions = model.predict_generator(test_data_generator, steps=test_steps_per_epoch)
+# Get most likely class
+predicted_classes = np.argmax(predictions, axis=1)
+
+
+true_classes = test_data_generator.classes
+class_labels = list(test_data_generator.class_indices.keys())   
+
+report = metrics.classification_report(true_classes, predicted_classes, target_names=class_labels)
+cmatrix=metrics.confusion_matrix(y_true=validation_generator.classes, y_pred=predicted_classes)
+
+print(report) 
+print(cmatrix)
 ```
 
-- Confution Matrix and Classification Report
+- Confusion Matrix and classification report on CK+: 
 ```
-Y_pred = model.predict_generator(validation_generator, nb_validation_samples // batch_size+1)
-y_pred = np.argmax(Y_pred, axis=1)
+#%% Confusion matrix as graphic - not complete
+from sklearn.metrics import confusion_matrix
+import itertools
+import matplotlib.pyplot as plt
+from sklearn.metrics import plot_confusion_matrix
 
-print('Confusion Matrix')
-print(confusion_matrix(validation_generator.classes, y_pred))
-print('Classification Report')
-target_names = list(class_labels.values())
-print(classification_report(validation_generator.classes, y_pred, target_names=target_names))
+cmatrix = confusion_matrix(y_true=validation_generator.classes, y_pred=predicted_classes)
+classes=['Angry','Disgust','Fear','Happy','Natural','Sad','Surprise']
+thresh = cmatrix.max() / 2.
+# print(cmatrix)
+# print(cm)
 
-plt.figure(figsize=(8,8))
-cnf_matrix = confusion_matrix(validation_generator.classes, y_pred)
-
-plt.imshow(cnf_matrix, interpolation='nearest')
-plt.colorbar()
+plt.imshow(cmatrix, interpolation='nearest', cmap=plt.cm.Blues)
+plt.tight_layout()
+plt.ylabel('true_classes')
+plt.xlabel('predicted_classes')
+for i, j in itertools.product(range(cmatrix.shape[0]), range(cmatrix.shape[1])):
+        plt.text(j, i, cmatrix[i, j],
+            horizontalalignment="center",
+            color="white" if cmatrix[i, j] > thresh else "black")
 tick_marks = np.arange(len(classes))
-_ = plt.xticks(tick_marks, classes, rotation=90)
-_ = plt.yticks(tick_marks, classes)
+plt.xticks(tick_marks, classes, rotation=45)
+plt.yticks(tick_marks, classes)
+plt.title('Confusion matrix')
+plt.colorbar()
 ```
-- Confusion Matrix in Number schema on Fer2013: 
+- And output is: 
+![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/matrix.png?raw=true) 
 
-![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/confision.jpg?raw=true) 
-
-- Confusion Matrix in Number schema on CK+: 
-
-![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/CK-matrix.jpg?raw=true) 
-
-
-- Confusion Matrix in Graohic schema on Fer2013:
-
-![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/confission.png?raw=true)
-
-- Confusion Matrix in Graohic schema on CK+:
-
-![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/CK-matrix-color.png?raw=true)
-
-
-- And the classification report on Fer2013:
-
-![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/report.jpg?raw=true)
-
-- And the classification report on CK+:
-
-![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/CK-report.jpg?raw=true)
 
 
 Test on some of validation images
