@@ -245,8 +245,10 @@ plt.show()
 
 
 - The loss of training step on CK+:
+<p align="center">
+<img align="center" width="100" height="100" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/ck_train_loss.png?raw=true">
+</p>
 
-![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/ck_train_loss.png?raw=true)
 ```
 #%% Plot Model loss in validation step
 from matplotlib import pyplot as plt
@@ -261,8 +263,9 @@ plt.show()
 ```
 - The accuracy of training step on CK+:
 
-![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/ck_train_acc.png?raw=true)
-
+<p align="center">
+<img align="center" width="100" height="100" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/ck_train_acc.png?raw=true">
+</p>
 
 Confusion Matrix of our model in some validation images
 -
@@ -330,8 +333,9 @@ plt.title('Confusion matrix')
 plt.colorbar()
 ```
 - And output is: 
-![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/matrix.png?raw=true) 
-           
+<p align="center">
+<img align="center" width="100" height="100" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/matrix.png?raw=true">
+</p>           
 Explainable AI (XAI) 
 -
 Explainable AI (XAI) refers to methods and techniques in the application of artificial intelligence technology (AI) such that the results of the solution can be understood by humans. It contrasts with the concept of the "black box" in machine learning where even their designers cannot explain why the AI arrived at a specific decision.[1] XAI may be an implementation of the social right to explanation.[2] XAI is relevant even if there is no legal rights or regulatory requirements (for example, XAI can improve the user experience of a product or service by helping end users trust that the AI is making good decisions.)
@@ -348,8 +352,9 @@ XAI Methods
 LIME is a novel explanation technique that explains the predictions of any classifier in an interpretable and faithful manner, by learning an interpretable model locally around the prediction. [5]
 
 In lime we have two main steps:
-![](https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/12.jpg?raw=true)
-
+<p align="center">
+<img align="center" width="500" height="500" src="https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/12.jpg?raw=true">
+</p> 
 - “Preprocessing”
 
 1) The ground truth image is first segmented into different sections using Quickshift segmentation.
