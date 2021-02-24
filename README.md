@@ -1,4 +1,4 @@
-# Emotion-Recognition via CNN and Explaination AI (LIME algorithm)
+## Emotion-Recognition via CNN and Explaination AI (LIME algorithm)
 The main idea of this work is to apply several XAI methods like LIME on the CNN classifier applying on emotion datasets. Fer2013 and CK + datasets are used via the proposed method and the result is presented in the following sections. As a novelty of our work,in the last part of this code, the LIME and LRP explanation AI algorithms are the objectives, but other methods will also be studied. 
 
 ### In this work, we followed two steps: 
