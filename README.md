@@ -246,7 +246,7 @@ plt.show()
 
 - The loss of training step on CK+:
 <p align="center">
-<img align="center" width="100" height="100" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/ck_train_loss.png?raw=true">
+<img align="center" width="400" height="400" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/ck_train_loss.png?raw=true">
 </p>
 
 ```
@@ -264,7 +264,7 @@ plt.show()
 - The accuracy of training step on CK+:
 
 <p align="center">
-<img align="center" width="100" height="100" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/ck_train_acc.png?raw=true">
+<img align="center" width="400" height="400" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/ck_train_acc.png?raw=true">
 </p>
 
 Confusion Matrix of our model in some validation images
@@ -334,7 +334,7 @@ plt.colorbar()
 ```
 - And output is: 
 <p align="center">
-<img align="center" width="100" height="100" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/matrix.png?raw=true">
+<img align="center" width="400" height="400" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/matrix.png?raw=true">
 </p>           
 Explainable AI (XAI) 
 -
@@ -353,7 +353,7 @@ LIME is a novel explanation technique that explains the predictions of any class
 
 In lime we have two main steps:
 <p align="center">
-<img align="center" width="500" height="500" src="https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/12.jpg?raw=true">
+<img align="center" width="700" height="500" src="https://github.com/Mahdidrm/Emotion-Recognition/blob/master/Figures/12.jpg?raw=true">
 </p> 
 - “Preprocessing”
 
