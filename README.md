@@ -305,7 +305,8 @@ print(cmatrix)
 ```
 <p align="center">
 <img align="center" width="400" height="400" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-LIME/blob/master/Figures/report.png?raw=true">
-</p>    
+</p>   
+
 - Confusion Matrix in graphic mode: 
 ```
 #%% Confusion matrix as graphic - not complete
@@ -335,9 +336,11 @@ plt.title('Confusion matrix')
 plt.colorbar()
 ```
 - And output is: 
+
 <p align="center">
 <img align="center" width="400" height="400" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/matrix.png?raw=true">
 </p>           
+
 Explainable AI (XAI) 
 -
 Explainable AI (XAI) refers to methods and techniques in the application of artificial intelligence technology (AI) such that the results of the solution can be understood by humans. It contrasts with the concept of the "black box" in machine learning where even their designers cannot explain why the AI arrived at a specific decision.[1] XAI may be an implementation of the social right to explanation.[2] XAI is relevant even if there is no legal rights or regulatory requirements (for example, XAI can improve the user experience of a product or service by helping end users trust that the AI is making good decisions.)
