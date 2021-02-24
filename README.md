@@ -462,20 +462,33 @@ for i, (c_ax) in zip(explanation.top_labels, m_axs.T):
 - Outputs:
 
 1) Angry input image of CK+ dataset:
-![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-angry.png?raw=true)
+<p align="center">
+<img align="center" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-angry.png?raw=true">
+</p>  
 2) Disgust input image of CK+ dataset:
-![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-disgust.png?raw=true)
+<p align="center">
+<img align="center" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-disgust.png?raw=true">
+</p>  
 3) Fear input image of CK+ dataset:
-![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-fear.png?raw=true)
+<p align="center">
+<img align="center" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-fear.png?raw=true">
+</p>  
 4) Happy input image of CK+ dataset:
-![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-happy.png?raw=true)
+<p align="center">
+<img align="center" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-happy.png?raw=true">
+</p> 
 5) Natural input image of CK+ dataset:
-![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-natural.png?raw=true)
+<p align="center">
+<img align="center" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-natural.png?raw=true">
+</p> 
 6) Sad input image of CK+ dataset:
-![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-sad.png?raw=true)
+<p align="center">
+<img align="center" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-sad.png?raw=true">
+</p> 
 7) Surprise input image of CK+ dataset:
-![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-surprise.png?raw=true)
-
+<p align="center">
+<img align="center" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-surprise.png?raw=true">
+</p> 
   
 Refrences
 -
