@@ -3,9 +3,8 @@ The main idea of this work is to apply several XAI methods like LIME on the CNN 
 
 ### In this work, we followed two steps: 
  
-1- We used a convolution neural network (CNN) for the emotions recognition 
-
-2- Using the Lime algorithm to monitor the heat maps of the input image which help our CNN decide to select the corresponding emotion.
+1) We used a convolution neural network (CNN) for the emotions recognition 
+2) Using the Lime algorithm to monitor the heat maps of the input image which help our CNN decide to select the corresponding emotion.
 
 
 ### Requirements
@@ -70,11 +69,8 @@ from keras.optimizers import RMSprop, SGD, Adam
 from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 from keras import regularizers
 from keras.regularizers import l1
-
 from tensorflow.python.client import device_lib
-
 from keras import backend as K
-
 import cv2
 import lime
 from lime import lime_image
@@ -157,34 +153,33 @@ model.summary()
 ```
 About Layers:
 - 
-```
+
 - Each conv2D layer extracts the features of the image according to the kernel filter. we used 3 * 3 kernels.
 - And on the Maxpool diapers; they select the entities with the highest resolutions among the 2 * 2 dimension entities.
 - Flatten Layer converts a tensor to a vector to send it to fully connected layers that use in the classification.
 - The softmax activation is normally applied to the very last layer in a neural net, instead of using ReLU, sigmoid, 
 tanh, or another activation function. The reason why softmax is useful is because it converts the output of
 the last layer in your neural network into what is essentially a probability distribution.
-```
+
 - How define the layer's dimensions
-```
+
 To create convolutional layer, we use tf.nn.conv2d. It computes a 2-D convolution given 4-D input and filter tensors.
-```
+
 - Inputs:
-```
+
 tensor of shape [batch, in_height, in_width, in_channels]. x of shape [batch_size,28 ,28, 1]
 a filter / kernel tensor of shape [filter_height, filter_width, in_channels, out_channels]. W is of size [5, 5, 1, 32]
 stride which is [1, 1, 1, 1]. The convolutional layer, slides the "kernel window" across the input tensor. As the input tensor has 4 dimensions: [batch, height, width, channels], then the convolution operates on a 2D window on the height and width dimensions. strides determines how much the window shifts by in each of the dimensions. As the first and last dimensions are related to batch and channels, we set the stride to 1. But for second and third dimension, we could set other values, e.g. [1, 2, 2, 1]
-Process:
+
+- Process:
 
 Change the filter to a 2-D matrix with shape [5*5*1,32]
 Extracts image patches from the input tensor to form a virtual tensor of shape [batch, 28, 28, 5*5*1].
 For each batch, right-multiplies the filter matrix and the image vector.
-```
-- Output:
-```
-A Tensor (a 2-D convolution) of size tf.Tensor 'add_7:0' shape=(?, 28, 28, 32)- Notice: the output of the first convolution layer is 32 [28x28] images. Here 32 is considered as volume/depth of the output image
-```
 
+- Output:
+
+A Tensor (a 2-D convolution) of size tf.Tensor 'add_7:0' shape=(?, 28, 28, 32)- Notice: the output of the first convolution layer is 32 [28x28] images. Here 32 is considered as volume/depth of the output image
 
 ### Train the model
 
@@ -336,164 +331,7 @@ plt.colorbar()
 ```
 - And output is: 
 ![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/matrix.png?raw=true) 
-
-
-
-Test on some of validation images
-- 
-- In this step, we test our model in some of the validation images in our dataset.
-- First, we load some liberaries:
-```
-from keras.models import load_model
-from keras.optimizers import RMSprop, SGD, Adam
-from keras.preprocessing import image
-import numpy as np
-import os
-import cv2
-import numpy as np
-from os import listdir
-from os.path import isfile, join
-import re
-import keras
-from keras.applications import inception_v3 as inc_net
-from keras.preprocessing import image
-from keras.applications.imagenet_utils import decode_predictions
-from skimage.io import imread
-import matplotlib.pyplot as plt
-import numpy as np
-```
-- This function writes true and predicted class matches from images.
-```
-def draw_test(name, pred, im, true_label):
-    BLACK = [0,0,0]
-    expanded_image = cv2.copyMakeBorder(im, 160, 0, 0, 300 ,cv2.BORDER_CONSTANT,value=BLACK)
-    cv2.putText(expanded_image, "predited - "+ pred, (20, 60) , cv2.FONT_HERSHEY_SIMPLEX,1, (0,0,255), 2)
-    cv2.putText(expanded_image, "true - "+ true_label, (20, 120) , cv2.FONT_HERSHEY_SIMPLEX,1, (0,255,0), 2)
-    cv2.imshow(name, expanded_image)
-```
-This function chooses some random images from our validation folder.
-```
-def getRandomImage(path, img_width, img_height):
-    """function loads a random images from a random folder in our test path """
-    folders = list(filter(lambda x: os.path.isdir(os.path.join(path, x)), os.listdir(path)))
-    random_directory = np.random.randint(0,len(folders))
-    path_class = folders[random_directory]
-    file_path = path + path_class
-    file_names = [f for f in listdir(file_path) if isfile(join(file_path, f))]
-    random_file_index = np.random.randint(0,len(file_names))
-    image_name = file_names[random_file_index]
-    final_path = file_path + "/" + image_name
-    return image.load_img(final_path, target_size = (img_width, img_height),grayscale=True), final_path, path_class
-```
-- Dimensions of our images
-```
-img_width, img_height = 48, 48
-```
-- We use a very small learning rate 
-```
-model.compile(loss = 'categorical_crossentropy',
-              optimizer = RMSprop(lr = 0.001),
-              metrics = ['accuracy'])
-```
-- And now we give the address of the training folder and call the functions
-```
-files = []
-predictions = []
-true_labels = []
-
-# predicting images
-for i in range(0, 10):
-    path = '/src/fer2013/validation/' 
-    img, final_path, true_label = getRandomImage(path, img_width, img_height)
-    files.append(final_path)
-    true_labels.append(true_label)
-    x = image.img_to_array(img)
-    x = x * 1./255
-    x = np.expand_dims(x, axis=0)
-    images = np.vstack([x])
-    classes = model.predict_classes(images, batch_size = 10)
-    predictions.append(classes)
-    
-for i in range(0, len(files)):
-    image = cv2.imread((files[i]))
-    image = cv2.resize(image, None, fx=3, fy=3, interpolation = cv2.INTER_CUBIC)
-    draw_test("Prediction", class_labels[predictions[i][0]], image, true_labels[i])
-    cv2.waitKey(0)
-
-cv2.destroyAllWindows()
- ```           
-Test on a single image out of our dataset (RGB or GrayScale)
--
-In this step, we check the capacity of our model trained on an image of our dataset
-- Fist, we load the needed librairies
-``` 
-import keras
-from keras.applications.imagenet_utils import decode_predictions
-from keras.models import load_model
-from keras.preprocessing import image
-from keras.preprocessing.image import img_to_array
-import numpy as np
-import os
-from os import listdir
-from os.path import isfile, join
-import matplotlib.pyplot as plt
-import lime
-from lime import lime_image
-import cv2
-from skimage.io import imread
-import matplotlib.pyplot as plt
-``` 
-And now we should load a face classifier to find the face on the input image. We use of haarcascade_frontalface face classifier.
-- Haar Cascade is a machine learning object detection algorithm used to identify objects in an image or video and based on the concept of features proposed by Paul Viola and Michael Jones in their paper "Rapid Object Detection using a Boosted Cascade of Simple Features" in 2001.
-- More Info: https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_objdetect/py_face_detection/py_face_detection.html
-
-``` 
-face_classifier = cv2.CascadeClassifier('/Haarcascades/haarcascade_frontalface_default.xml') 
-```
-- Face detection function
-```
-def face_detector(img):
-    # Convert image to grayscale
-    gray = cv2.cvtColor(img.copy(),cv2.COLOR_BGR2GRAY)
-    faces = face_classifier.detectMultiScale(gray, 1.3, 5)
-    if faces is ():
-        return (0,0,0,0), np.zeros((48,48), np.uint8), img
-    
-    allfaces = []   
-    rects = []
-    for (x,y,w,h) in faces:
-        cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
-        roi_gray = gray[y:y+h, x:x+w]
-        roi_gray = cv2.resize(roi_gray, (48, 48), interpolation = cv2.INTER_AREA)
-        allfaces.append(roi_gray)
-        rects.append((x,w,y,h))
-    return rects, allfaces, img
-```
-- Load an image out of our dataset (GrayScale or RGB) and send to face detection function
-```
-img20 = cv2.imread("/test_images/22.png")
-rects, faces, image = face_detector(img20)
-i = 0
-for face in faces:
-    roi = face.astype("float") / 255.0
-    roi = img_to_array(roi)
-    roi = np.expand_dims(roi, axis=0)
-```
-- Make a prediction on the ROI, then lookup the class
-```
-    preds = classifier.predict(roi)[0]
-    label = class_labels[preds.argmax()]   
-```
-- Overlay our detected emotion on our pic
-```
-    label_position = (rects[i][0] + int((rects[i][1]/2)), abs(rects[i][2] - 10))
-    i =+ 1
-    cv2.putText(image, label, label_position , cv2.FONT_HERSHEY_SIMPLEX,1, (0,255,0), 2)
-    cv2.imshow("Emotion Detector", image)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-
-   ```           
+           
 Explainable AI (XAI) 
 -
 Explainable AI (XAI) refers to methods and techniques in the application of artificial intelligence technology (AI) such that the results of the solution can be understood by humans. It contrasts with the concept of the "black box" in machine learning where even their designers cannot explain why the AI arrived at a specific decision.[1] XAI may be an implementation of the social right to explanation.[2] XAI is relevant even if there is no legal rights or regulatory requirements (for example, XAI can improve the user experience of a product or service by helping end users trust that the AI is making good decisions.)
@@ -514,24 +352,17 @@ In lime we have two main steps:
 
 - “Preprocessing”
 
-1- The ground truth image is first segmented into different sections using Quickshift segmentation.
-
-2- The next step is to generate N data samples by randomly masking out some of the image regions based on the segmentations.
+1) The ground truth image is first segmented into different sections using Quickshift segmentation.
+2) The next step is to generate N data samples by randomly masking out some of the image regions based on the segmentations.
 This is resulted in a data matrix of "samples x segmentations" where the first row is kept with no mask applied (all 1).
-
-3- Each sample is weighted based on how much it is different from the original vector (row 1) using some ‘distance’ function.
+3) Each sample is weighted based on how much it is different from the original vector (row 1) using some ‘distance’ function.
 
 - “Explanation”
-
-4- Each data sample (masked/pertubed image) is passed to the classifier (the model being explained e.g. our emotion classifier) for the prediction.
-
-5- The data instances (binaries) with the corresponding weights (step 3) and the predicted label (step 4- but one label at the time) are then fit to the K-LASSO or Ridge regression classifier to measure the importance of each feature (segmentation in this case).
-
+4) Each data sample (masked/pertubed image) is passed to the classifier (the model being explained e.g. our emotion classifier) for the prediction.
+5) The data instances (binaries) with the corresponding weights (step 3) and the predicted label (step 4- but one label at the time) are then fit to the K-LASSO or Ridge regression classifier to measure the importance of each feature (segmentation in this case).
 - Ridge Regression is a technique for analyzing multiple regression data that suffer from multicollinearity. When multicollinearity occurs, least squares estimates are unbiased, but their variances are large so they may be far from the true value.
-
-6- The final output are the weights, which are representing significance of each segmented feature on the given class.
-
-7- The positive (support) and negative (against) segments/features are display based on the given thresholding value
+6) The final output are the weights, which are representing significance of each segmented feature on the given class.
+7) The positive (support) and negative (against) segments/features are display based on the given thresholding value
 (e.g. ‘0’ as the separating boundary of being supportive or not).
 
 - LIME code for our work:
@@ -548,11 +379,11 @@ import numpy as np
 model.load_weights(os.path.join('/modelCK48-cnn1.hdf5'))
 ```
 - Now we define our fuctions:
-1- new_predict_fn uses to reshape the input image, then calculate its prediction.
+1) new_predict_fn uses to reshape the input image, then calculate its prediction.
 
-2- new_predict_fn_proba uses to find the probability class of the input image.
+2) new_predict_fn_proba uses to find the probability class of the input image.
 
-3- getLabel uses to find the class tag corresponding to the problematic class in the image. This means that when we get the probability of an image, we need to get the class name of that number to display in our plot.
+3) getLabel uses to find the class tag corresponding to the problematic class in the image. This means that when we get the probability of an image, we need to get the class name of that number to display in our plot.
 
 ```
 def new_predict_fn(img):
@@ -620,36 +451,22 @@ for i, (c_ax) in zip(explanation.top_labels, m_axs.T):
  ```
 - Outputs:
 
-1- Angry input image of CK+ dataset:
-
+1) Angry input image of CK+ dataset:
 ![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-angry.png?raw=true)
-
-2-Disgust input image of CK+ dataset:
-
+2) Disgust input image of CK+ dataset:
 ![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-disgust.png?raw=true)
-
-3- Fear input image of CK+ dataset:
-
+3) Fear input image of CK+ dataset:
 ![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-fear.png?raw=true)
-
-4- Happy input image of CK+ dataset:
-
+4) Happy input image of CK+ dataset:
 ![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-happy.png?raw=true)
-
-5- Natural input image of CK+ dataset:
-
+5) Natural input image of CK+ dataset:
 ![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-natural.png?raw=true)
-
-6- Sad input image of CK+ dataset:
-
+6) Sad input image of CK+ dataset:
 ![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-sad.png?raw=true)
-
-7- Surprise input image of CK+ dataset:
-
+7) Surprise input image of CK+ dataset:
 ![](https://github.com/Mahdidrm/Emotion-Recognition-CNN-Fer2013-Lime/blob/master/Figures/CNN1-learn-via-cK/Lime-ck-surprise.png?raw=true)
 
-
-    
+  
 Refrences
 -
 [1] Sample, Ian (5 November 2017). "Computer says no: why making AIs fair, accountable and transparent is crucial". the Guardian. Retrieved 30 January 2018. https://www.theguardian.com/science/2017/nov/05/computer-says-no-why-making-ais-fair-accountable-and-transparent-is-crucial
