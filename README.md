@@ -303,8 +303,10 @@ cmatrix=metrics.confusion_matrix(y_true=validation_generator.classes, y_pred=pre
 print(report) 
 print(cmatrix)
 ```
-
-- Confusion Matrix and classification report on CK+: 
+<p align="center">
+<img align="center" width="400" height="400" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-LIME/blob/master/Figures/report.png?raw=true">
+</p>    
+- Confusion Matrix in graphic mode: 
 ```
 #%% Confusion matrix as graphic - not complete
 from sklearn.metrics import confusion_matrix
