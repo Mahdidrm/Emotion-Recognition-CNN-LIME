@@ -151,6 +151,13 @@ model.add(Dense(7))
 model.add(Activation("softmax"))
 model.summary()
 ```
+- Model schema will be :
+
+<p align="center">
+<img align="center" width="400" height="700" src="https://github.com/Mahdidrm/Emotion-Recognition-CNN-LIME/blob/master/Figures/EModel.png?raw=true">
+</p>
+
+
 About Layers:
 - 
 
